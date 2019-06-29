@@ -3535,10 +3535,20 @@ public class IdCardGenerationImpl implements IdCardGeneration {
 	 * @return
 	 */
 	@Override
-	public String generate() {
+	public String generate(Integer areaCcode,String birth) {//411521198610164698
 		StringBuilder generater = new StringBuilder();
-		generater.append(this.getRandomArea());
-		generater.append(this.getRandomBirthday());
+		if(areaCcode==null) {
+			generater.append(this.getRandomArea());
+		}else {
+			generater.append(areaCcode);
+		}
+		if(birth==null||birth.isEmpty()) {
+			generater.append(this.getRandomBirthday());			
+		}else {
+			generater.append(birth);
+		}
+		
+		
 		generater.append(this.getRandomNumber());
 		generater.append(this.getTestCode(generater.toString().toCharArray()));
 		return generater.toString();

@@ -14,9 +14,7 @@ import com.htf.zdh.service.IdCardGeneration;
 @RestController
 @RequestMapping(value = "test")
 public class IDCardController {
-	
-	
-	
+
 	@Autowired
 	private IdCardGeneration idCardGenerationService;
 
@@ -27,9 +25,13 @@ public class IDCardController {
 		return map;
 	}
 
-	@RequestMapping(value = "/getIDCard", method = RequestMethod.GET)
-	public String getIDCard() {	
-		return idCardGenerationService.generate();
+	@RequestMapping(value = "/randomIdNo", method = { RequestMethod.POST, RequestMethod.GET })
+	public Map<String, String> getIDCard(@RequestParam(value = "areaCode", required = false) Integer areaCode,
+			@RequestParam(value = "birth", required = false) String birth) {
+
+		Map<String, String> map = new HashMap<>();
+		map.put("idNo", idCardGenerationService.generate(areaCode, birth));
+		return map;
 	}
 
 }
