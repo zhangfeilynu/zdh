@@ -3535,20 +3535,19 @@ public class IdCardGenerationImpl implements IdCardGeneration {
 	 * @return
 	 */
 	@Override
-	public String generate(Integer areaCcode,String birth) {//411521198610164698
+	public String generate(Integer areaCcode, String birth) {
 		StringBuilder generater = new StringBuilder();
-		if(areaCcode==null) {
+		if (areaCcode == null) {
 			generater.append(this.getRandomArea());
-		}else {
+		} else {
 			generater.append(areaCcode);
 		}
-		if(birth==null||birth.isEmpty()) {
-			generater.append(this.getRandomBirthday());			
-		}else {
+		if (birth == null || birth.isEmpty()) {
+			generater.append(this.getRandomBirthday());
+		} else {
 			generater.append(birth);
 		}
-		
-		
+
 		generater.append(this.getRandomNumber());
 		generater.append(this.getTestCode(generater.toString().toCharArray()));
 		return generater.toString();
@@ -3560,7 +3559,7 @@ public class IdCardGenerationImpl implements IdCardGeneration {
 	 * @return
 	 */
 	private int getRandomArea() {
-		int index = (int) (Math.random() * IdCardGenerationImpl.idRegion.size());		
+		int index = (int) (Math.random() * IdCardGenerationImpl.idRegion.size());
 		Collection<Integer> values = IdCardGenerationImpl.idRegion.values();
 		Iterator<Integer> it = values.iterator();
 		int i = 0;
