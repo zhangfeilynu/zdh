@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.htf.zdh.service.IdCardGeneration;
+import com.htf.zdh.service.IdCardService;
 
 @RestController
 @RequestMapping(value = "test")
@@ -19,7 +19,7 @@ public class IDCardController {
 	private static final Logger logger = LoggerFactory.getLogger(IDCardController.class);
 
 	@Autowired
-	private IdCardGeneration idCardGenerationService;
+	private IdCardService idCardService;
 
 	@RequestMapping(value = "/getUser", method = RequestMethod.GET)
 	public Map<String, Object> getUserByGet(@RequestParam(value = "userName") String userName) {
@@ -35,7 +35,7 @@ public class IDCardController {
 
 		logger.info("获取随机身份证号码...");
 		Map<String, String> map = new HashMap<>();
-		map.put("idNo", idCardGenerationService.generate(areaCode, birth));
+		map.put("idNo", idCardService.generate(areaCode, birth));
 		return map;
 	}
 
