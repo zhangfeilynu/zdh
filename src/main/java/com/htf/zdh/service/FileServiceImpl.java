@@ -16,6 +16,9 @@ public class FileServiceImpl implements FileService {
 	@Value("${basePath}")
 	private String basePath;
 
+	@Value("${env}")
+	private String env;
+
 	@Override
 	public Map<String, String> uploadFile(AppInfoBo appInfo, MultipartFile file) {
 
@@ -46,10 +49,15 @@ public class FileServiceImpl implements FileService {
 			return result;
 		}
 
-		logger.info("当前环境是：" + System.getProperty("env"));
+		String filePath = "";
 
-		String filePath = basePath + "\\" + appInfo.getEnv() + "\\" + appInfo.getType() + "\\" + appInfo.getVersion()
-				+ "\\";
+		if ("dev".equals(env)) {
+			filePath = basePath + "\\" + appInfo.getEnv() + "\\" + appInfo.getType() + "\\" + appInfo.getVersion()
+					+ "\\";
+		} else {
+			filePath = basePath + "/" + appInfo.getEnv() + "/" + appInfo.getType() + "/" + appInfo.getVersion() + "/";
+		}
+
 		File dir = new File(filePath);
 		if (!dir.exists()) {
 			dir.mkdirs();

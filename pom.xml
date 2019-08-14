@@ -86,8 +86,8 @@
 				</excludes>
 			</resource>
 			<resource>
-				<directory>src/main/resources/env/${env}</directory>				
-				<filtering>true</filtering>
+				<directory>src/main/resources/env/${env}</directory>
+				<!-- <filtering>true</filtering> -->
 			</resource>
 		</resources>
 		<plugins>
@@ -100,5 +100,6 @@
 			</plugin>
 		</plugins>
 	</build>
+	
 
 </project>
