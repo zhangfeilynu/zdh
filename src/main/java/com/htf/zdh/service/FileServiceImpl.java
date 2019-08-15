@@ -58,11 +58,6 @@ public class FileServiceImpl implements FileService {
 			filePath = basePath + "/" + appInfo.getEnv() + "/" + appInfo.getType() + "/" + appInfo.getVersion() + "/";
 		}
 
-		File dir = new File(filePath);
-		if (!dir.exists()) {
-			dir.mkdirs();
-		}
-
 		if (file.isEmpty()) {
 			result.put("code", "40004");
 			result.put("message", "上传失败，文件不存在");
@@ -100,6 +95,10 @@ public class FileServiceImpl implements FileService {
 				result.put("message", "上传失败，类型为ios时，文件扩展名必须为ipa");
 				return result;
 			}
+		}
+		File dir = new File(filePath);
+		if (!dir.exists()) {
+			dir.mkdirs();
 		}
 
 		File dest = new File(filePath + fileName);
