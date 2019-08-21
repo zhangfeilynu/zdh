@@ -4,8 +4,10 @@ import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.htf.zdh.controller.vo.Result;
+
 public interface FileService {
 
-	public Map<String, String> uploadFile(AppInfoBo appInfo, MultipartFile file);
+	public Result uploadFile(AppInfoBo appInfo, MultipartFile file);
 
 }

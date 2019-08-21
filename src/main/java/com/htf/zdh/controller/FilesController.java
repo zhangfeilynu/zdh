@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.htf.zdh.controller.vo.Result;
 import com.htf.zdh.service.AppInfoBo;
 import com.htf.zdh.service.FileService;
 
@@ -22,9 +23,8 @@ public class FilesController {
 	private FileService fileService;
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public Map<String, String> uploadFile(@RequestParam(value = "env") String env,
-			@RequestParam(value = "type") String type, @RequestParam(value = "version") String version,
-			@RequestParam(value = "file") MultipartFile file) {
+	public Result uploadFile(@RequestParam(value = "env") String env, @RequestParam(value = "type") String type,
+			@RequestParam(value = "version") String version, @RequestParam(value = "file") MultipartFile file) {
 		AppInfoBo appInfo = new AppInfoBo();
 		appInfo.setEnv(env);
 		appInfo.setType(type);
