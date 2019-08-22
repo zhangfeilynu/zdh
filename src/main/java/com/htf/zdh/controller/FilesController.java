@@ -23,8 +23,9 @@ public class FilesController {
 	private FileService fileService;
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public Result uploadFile(@RequestParam(value = "env") String env, @RequestParam(value = "type") String type,
-			@RequestParam(value = "version") String version, @RequestParam(value = "file") MultipartFile file) {
+	public Result<AppInfoBo> uploadFile(@RequestParam(value = "env") String env,
+			@RequestParam(value = "type") String type, @RequestParam(value = "version") String version,
+			@RequestParam(value = "file") MultipartFile file) {
 		AppInfoBo appInfo = new AppInfoBo();
 		appInfo.setEnv(env);
 		appInfo.setType(type);

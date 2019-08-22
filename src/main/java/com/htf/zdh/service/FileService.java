@@ -8,6 +8,6 @@ import com.htf.zdh.controller.vo.Result;
 
 public interface FileService {
 
-	public Result uploadFile(AppInfoBo appInfo, MultipartFile file);
+	public Result<AppInfoBo> uploadFile(AppInfoBo appInfo, MultipartFile file);
 
 }

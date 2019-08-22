@@ -22,11 +22,11 @@ public class FileServiceImpl implements FileService {
 	private String env;
 
 	@Override
-	public Result uploadFile(AppInfoBo appInfo, MultipartFile file) {
+	public Result<AppInfoBo> uploadFile(AppInfoBo appInfo, MultipartFile file) {
 
 		// Map<String, String> result = new HashMap<>();
 
-		Result result = new Result();
+		Result<AppInfoBo> result = new Result<AppInfoBo>();
 
 		if (appInfo.getEnv() == null || "".equals(appInfo.getEnv())) {
 			result.setCode(40001);
