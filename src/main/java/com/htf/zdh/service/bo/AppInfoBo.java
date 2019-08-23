@@ -1,4 +1,4 @@
-package com.htf.zdh.service;
+package com.htf.zdh.service.bo;
 
 import java.io.Serializable;
 

@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.htf.zdh.controller.vo.Result;
 import com.htf.zdh.jdbc.dao.AppInfoListMapper;
 import com.htf.zdh.jdbc.po.AppInfoList;
+import com.htf.zdh.service.bo.AppInfoBo;
 
 @Service
 public class FileServiceImpl implements FileService {
