@@ -43,13 +43,31 @@ public class FilesController {
 	public Result<AppInfoListBo> getApiList(@RequestParam(required = false) String env,
 			@RequestParam(required = false) String type, @RequestParam(required = false) String version,
 			@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
-		Result result = new Result();
+		Result<AppInfoListBo> result = new Result<AppInfoListBo>();
+		result.setCode(1);
+		result.setMessage("查询成功");
+
+		if ("".equals(env)) {
+			env = null;
+		}
+		if ("".equals(type)) {
+			type = null;
+		}
+		if ("".equals(version)) {
+			version = null;
+		}
+
 		AppInfoList appInfoList = new AppInfoList();
 		appInfoList.setEnv(env);
 		appInfoList.setType(type);
 		appInfoList.setVersion(version);
-		AppInfoListBo apps = appInfoService.selectApps(appInfoList, pageNum, pageSize);
 
+		AppInfoListBo apps = appInfoService.selectApps(appInfoList, pageNum, pageSize);
+		// if (apps == null) {
+		// result.setCode(5000);
+		// result.setMessage("内部服务错误");
+		// return result;
+		// }
 		result.setData(apps);
 		return result;
 	}

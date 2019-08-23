@@ -33,9 +33,9 @@ public class AppInfoServiceImpl implements AppInfoService {
 
 		List<AppInfoList> list = appInfoListMapper.selectApps(appInfoList);
 
-		if (list == null || list.size() < 1) {
-			return null;
-		}
+		/*
+		 * if (list == null || list.size() < 1) { return null; }
+		 */
 
 		// 获取总记录数
 		PageInfo<AppInfoList> pageInfo = new PageInfo<AppInfoList>(list);
