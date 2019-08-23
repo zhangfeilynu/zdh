@@ -10,7 +10,7 @@
         </commentGenerator>
         <!-- 生发环境数据库配置:修改配置 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost:3306/apitest_mgmt_uat"
+                        connectionURL="jdbc:mysql://localhost:3306/zdh"
                         userId="root" password="888001">
         </jdbcConnection>
         <javaTypeResolver>
@@ -30,7 +30,7 @@
                              targetProject="E:/workspace/zdh/src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="chengji" enableCountByExample="false"
+        <table tableName="app_info_list" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"
                enableInsert="true" enableUpdateByPrimaryKey="true"
