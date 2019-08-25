@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.htf.zdh.service.IdCardService;
 
 @RestController
-@RequestMapping(value = "test")
+@RequestMapping(value = "id")
 public class IDCardController {
 	private static final Logger logger = LoggerFactory.getLogger(IDCardController.class);
 

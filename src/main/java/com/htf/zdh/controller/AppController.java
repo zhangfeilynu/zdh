@@ -1,6 +1,12 @@
 package com.htf.zdh.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.Map;
+
+import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,11 +22,12 @@ import com.htf.zdh.service.AppInfoService;
 import com.htf.zdh.service.FileService;
 import com.htf.zdh.service.bo.AppInfoBo;
 import com.htf.zdh.service.bo.AppInfoListBo;
+import com.htf.zdh.utils.QrCodeUtil;
 
 @RestController
-@RequestMapping(value = "file")
-public class FilesController {
-	private static final Logger logger = LoggerFactory.getLogger(FilesController.class);
+@RequestMapping(value = "app")
+public class AppController {
+	private static final Logger logger = LoggerFactory.getLogger(AppController.class);
 
 	@Autowired
 	private FileService fileService;
@@ -63,13 +70,23 @@ public class FilesController {
 		appInfoList.setVersion(version);
 
 		AppInfoListBo apps = appInfoService.selectApps(appInfoList, pageNum, pageSize);
-		// if (apps == null) {
-		// result.setCode(5000);
-		// result.setMessage("内部服务错误");
-		// return result;
-		// }
+
 		result.setData(apps);
 		return result;
+	}
+
+	@RequestMapping(value = "/qrcode", method = { RequestMethod.GET })
+	public void getQrCode(@RequestParam String url, HttpServletResponse response) {
+		QrCodeUtil qrCodeUtil = new QrCodeUtil();
+		BufferedImage image = qrCodeUtil.createQrCode(url);
+		response.setHeader("Content-Type", "image/jpeg");
+		response.setCharacterEncoding("UTF-8");
+		try {
+			ImageIO.write(image, "jpg", response.getOutputStream());
+		} catch (IOException e) {
+			logger.error("二维码写入输出流失败：" + e.getMessage());
+		}
+
 	}
 
 }
