@@ -1,6 +1,6 @@
 package com.htf.zdh.jdbc.dao;
 
-import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
 
 import com.htf.zdh.jdbc.po.AppInfoList;
 
@@ -12,6 +12,8 @@ public interface AppInfoListMapper {
 	int insertSelective(AppInfoList record);
 
 	AppInfoList selectByPrimaryKey(Integer id);
+
+	List<AppInfoList> selectApps(AppInfoList appInfoList);
 
 	int updateByPrimaryKeySelective(AppInfoList record);
 

@@ -1,8 +1,9 @@
 package com.htf.zdh.service;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,13 +11,21 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.htf.zdh.controller.vo.Result;
 import com.htf.zdh.jdbc.dao.AppInfoListMapper;
 import com.htf.zdh.jdbc.po.AppInfoList;
+import com.htf.zdh.service.bo.AppInfoBo;
+import com.htf.zdh.service.bo.AppInfoListBo;
 
 @Service
-public class FileServiceImpl implements FileService {
-	private static final Logger logger = LoggerFactory.getLogger(FileServiceImpl.class);
+public class AppInfoServiceImpl implements AppInfoService {
+
+	private static final Logger logger = LoggerFactory.getLogger(AppInfoServiceImpl.class);
+
+	@Autowired
+	private AppInfoListMapper appInfoListMapper;
 
 	@Value("${basePath}")
 	private String basePath;
@@ -27,8 +36,41 @@ public class FileServiceImpl implements FileService {
 	@Value("${baseDownloadUrl}")
 	private String baseDownloadUrl;
 
-	@Autowired
-	private AppInfoListMapper appInfoListMapper;
+	@Override
+	public AppInfoListBo selectApps(AppInfoList appInfoList, Integer pageNum, Integer pageSize) {
+
+		AppInfoListBo result = new AppInfoListBo();
+		// 设置分页
+		PageHelper.startPage(pageNum, pageSize);
+		result.setPageNum(pageNum);
+		result.setPageSize(pageSize);
+
+		List<AppInfoList> list = appInfoListMapper.selectApps(appInfoList);
+
+		/*
+		 * if (list == null || list.size() < 1) { return null; }
+		 */
+
+		// 获取总记录数
+		PageInfo<AppInfoList> pageInfo = new PageInfo<AppInfoList>(list);
+		Long total = pageInfo.getTotal();
+		result.setTotal(total);
+
+		// 数据处理
+		List<AppInfoList> results = new ArrayList<>();
+		// 如果pageNmu超过最后一页
+		if (pageNum > pageInfo.getLastPage()) {
+			result.setList(results);
+			return result;
+		}
+		// 转换数据
+		for (AppInfoList item : list) {
+			results.add(item);
+		}
+		result.setList(results);
+		return result;
+
+	}
 
 	@Override
 	public Result<AppInfoBo> uploadFile(AppInfoBo appInfo, MultipartFile file) {
@@ -134,6 +176,7 @@ public class FileServiceImpl implements FileService {
 			appInfoList.setType(appInfo.getType());
 			appInfoList.setVersion(appInfo.getVersion());
 			appInfoList.setDownloadUrl(downloadUrl);
+			appInfoList.setRemark(appInfo.getRemark());
 			saveAppInfo(appInfoList);
 			return result;
 		} catch (Exception e) {

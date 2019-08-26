@@ -1,5 +1,7 @@
 package com.htf.zdh.jdbc.po;
 
+import java.util.Date;
+
 public class AppInfoList {
     private Integer id;
 
@@ -10,6 +12,10 @@ public class AppInfoList {
     private String version;
 
     private String downloadUrl;
+
+    private Date uploadTime;
+
+    private String remark;
 
     public Integer getId() {
         return id;
@@ -49,5 +55,21 @@ public class AppInfoList {
 
     public void setDownloadUrl(String downloadUrl) {
         this.downloadUrl = downloadUrl == null ? null : downloadUrl.trim();
+    }
+
+    public Date getUploadTime() {
+        return uploadTime;
+    }
+
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
     }
 }
