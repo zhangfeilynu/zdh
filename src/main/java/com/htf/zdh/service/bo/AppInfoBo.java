@@ -10,6 +10,8 @@ public class AppInfoBo implements Serializable {
 	private String type;
 	private String version;
 
+	private String remark;
+
 	public String getEnv() {
 		return env;
 	}
@@ -32,6 +34,14 @@ public class AppInfoBo implements Serializable {
 
 	public void setVersion(String version) {
 		this.version = version;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 
 }

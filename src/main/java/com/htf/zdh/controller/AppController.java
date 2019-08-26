@@ -19,7 +19,6 @@ import org.springframework.web.multipart.MultipartFile;
 import com.htf.zdh.controller.vo.Result;
 import com.htf.zdh.jdbc.po.AppInfoList;
 import com.htf.zdh.service.AppInfoService;
-import com.htf.zdh.service.FileService;
 import com.htf.zdh.service.bo.AppInfoBo;
 import com.htf.zdh.service.bo.AppInfoListBo;
 import com.htf.zdh.utils.QrCodeUtil;
@@ -30,20 +29,18 @@ public class AppController {
 	private static final Logger logger = LoggerFactory.getLogger(AppController.class);
 
 	@Autowired
-	private FileService fileService;
-
-	@Autowired
 	private AppInfoService appInfoService;
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public Result<AppInfoBo> uploadFile(@RequestParam(value = "env") String env,
 			@RequestParam(value = "type") String type, @RequestParam(value = "version") String version,
-			@RequestParam(value = "file") MultipartFile file) {
+			@RequestParam(value = "remark") String remark, @RequestParam(value = "file") MultipartFile file) {
 		AppInfoBo appInfo = new AppInfoBo();
 		appInfo.setEnv(env);
 		appInfo.setType(type);
 		appInfo.setVersion(version);
-		return fileService.uploadFile(appInfo, file);
+		appInfo.setRemark(remark);
+		return appInfoService.uploadFile(appInfo, file);
 	}
 
 	@RequestMapping(value = "/applist", method = { RequestMethod.GET })
