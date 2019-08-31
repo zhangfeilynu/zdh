@@ -79,18 +79,18 @@ public class AppInfoServiceImpl implements AppInfoService {
 
 		if (appInfo.getEnv() == null || "".equals(appInfo.getEnv())) {
 			result.setCode(40001);
-			result.setMessage("缺少请求参数env");
+			result.setMessage("缺少请求参数:环境env");
 			return result;
 		}
 		if (appInfo.getType() == null || "".equals(appInfo.getType())) {
 			result.setCode(40001);
-			result.setMessage("缺少请求参数type");
+			result.setMessage("缺少请求参数：类型type");
 			return result;
 		}
 
 		if (appInfo.getVersion() == null || "".equals(appInfo.getVersion())) {
 			result.setCode(40001);
-			result.setMessage("缺少请求参数version");
+			result.setMessage("缺少请求参数：版本version");
 			return result;
 		}
 
