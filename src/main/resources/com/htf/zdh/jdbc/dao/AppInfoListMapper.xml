@@ -9,9 +9,10 @@
 		<result column="download_url" jdbcType="VARCHAR" property="downloadUrl" />
 		<result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
 		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="name" jdbcType="VARCHAR" property="name" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, env, type, version, download_url, upload_time, remark
+		id, env, type, version, download_url, upload_time, remark,name
 	</sql>
 
 
@@ -50,11 +51,11 @@
 	<insert id="insert" parameterType="com.htf.zdh.jdbc.po.AppInfoList">
 		insert into app_info_list (id, env, type,
 		version, download_url, upload_time,
-		remark)
+		remark,name)
 		values (#{id,jdbcType=INTEGER}, #{env,jdbcType=VARCHAR},
 		#{type,jdbcType=VARCHAR},
 		#{version,jdbcType=VARCHAR}, #{downloadUrl,jdbcType=VARCHAR}, #{uploadTime,jdbcType=TIMESTAMP},
-		#{remark,jdbcType=VARCHAR})
+		#{remark,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.htf.zdh.jdbc.po.AppInfoList">
 		insert into app_info_list
@@ -80,6 +81,9 @@
 			<if test="remark != null">
 				remark,
 			</if>
+			<if test="name != null">
+				name,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -102,6 +106,9 @@
 			</if>
 			<if test="remark != null">
 				#{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				#{name,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -126,6 +133,9 @@
 			<if test="remark != null">
 				remark = #{remark,jdbcType=VARCHAR},
 			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
@@ -136,7 +146,8 @@
 		version = #{version,jdbcType=VARCHAR},
 		download_url = #{downloadUrl,jdbcType=VARCHAR},
 		upload_time = #{uploadTime,jdbcType=TIMESTAMP},
-		remark = #{remark,jdbcType=VARCHAR}
+		remark = #{remark,jdbcType=VARCHAR},
+		name = #{name,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>

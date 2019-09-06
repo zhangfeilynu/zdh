@@ -18,6 +18,7 @@ import com.htf.zdh.jdbc.dao.AppInfoListMapper;
 import com.htf.zdh.jdbc.po.AppInfoList;
 import com.htf.zdh.service.bo.AppInfoBo;
 import com.htf.zdh.service.bo.AppInfoListBo;
+import com.htf.zdh.utils.IOSUtil;
 
 @Service
 public class AppInfoServiceImpl implements AppInfoService {
@@ -84,10 +85,12 @@ public class AppInfoServiceImpl implements AppInfoService {
 		}
 
 		if (appInfo.getEnv() == null || "".equals(appInfo.getEnv())) {
-			result.setCode(40001);
-			result.setMessage("缺少请求参数:环境env");
-			return result;
+			// result.setCode(40001);
+			// result.setMessage("缺少请求参数:环境env");
+			// return result;
+			appInfo.setEnv("UAT");
 		}
+		appInfo.setEnv(appInfo.getEnv().toUpperCase());
 
 		if (appInfo.getVersion() == null || "".equals(appInfo.getVersion())) {
 			result.setCode(40001);
@@ -178,7 +181,17 @@ public class AppInfoServiceImpl implements AppInfoService {
 			appInfoList.setVersion(appInfo.getVersion());
 			appInfoList.setDownloadUrl(downloadUrl);
 			appInfoList.setRemark(appInfo.getRemark());
+			appInfoList.setName(fileName);
 			saveAppInfo(appInfoList);
+			// APP上传成功后写入plist文件和html文件
+			if (appInfo.getType().equals("ios")) {
+				IOSUtil.createPlist(filePath, fileName.substring(0, fileName.length() - 4), "com.htf.mclient.Uat35",
+						downloadUrl);
+				String plistUrl = "https://10.50.16.230" + "/" + appInfo.getEnv() + "/" + appInfo.getType() + "/"
+						+ appInfo.getVersion() + "/" + fileName.substring(0, fileName.length() - 4) + ".plist";
+				IOSUtil.createHtml(filePath, fileName.substring(0, fileName.length() - 4), plistUrl);
+			}
+
 			return result;
 		} catch (Exception e) {
 			logger.error("上传文件出现异常：" + e.getMessage());

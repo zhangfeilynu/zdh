@@ -9,7 +9,6 @@ public class AppInfoBo implements Serializable {
 	private String env;
 	private String type;
 	private String version;
-
 	private String remark;
 
 	public String getEnv() {

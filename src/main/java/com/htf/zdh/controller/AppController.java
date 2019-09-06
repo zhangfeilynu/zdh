@@ -32,9 +32,10 @@ public class AppController {
 	private AppInfoService appInfoService;
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public Result<AppInfoBo> uploadFile(@RequestParam(value = "env") String env,
+	public Result<AppInfoBo> uploadFile(@RequestParam(value = "env", required = false) String env,
 			@RequestParam(value = "type") String type, @RequestParam(value = "version") String version,
-			@RequestParam(value = "remark") String remark, @RequestParam(value = "file") MultipartFile file) {
+			@RequestParam(value = "remark", required = false) String remark,
+			@RequestParam(value = "file") MultipartFile file) {
 		AppInfoBo appInfo = new AppInfoBo();
 		appInfo.setEnv(env);
 		appInfo.setType(type);
