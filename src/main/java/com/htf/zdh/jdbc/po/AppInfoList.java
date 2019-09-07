@@ -19,6 +19,16 @@ public class AppInfoList {
 
 	private String name;
 
+	private String autotest;
+
+	public String getAutotest() {
+		return autotest;
+	}
+
+	public void setAutotest(String autotest) {
+		this.autotest = autotest;
+	}
+
 	public String getName() {
 		return name;
 	}

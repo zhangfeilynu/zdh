@@ -40,7 +40,7 @@ public class QrCodeUtil {
 		try {
 			Map<EncodeHintType, String> hints = new HashMap<>();
 			hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
-			BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, 100, 100, hints);
+			BitMatrix bitMatrix = new MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, 200, 200, hints);
 			// File file = new File(path, fileName);
 			// if (file.exists()
 			// || ((file.getParentFile().exists() || file.getParentFile().mkdirs()) &&

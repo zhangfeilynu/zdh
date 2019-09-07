@@ -35,19 +35,22 @@ public class AppController {
 	public Result<AppInfoBo> uploadFile(@RequestParam(value = "env", required = false) String env,
 			@RequestParam(value = "type") String type, @RequestParam(value = "version") String version,
 			@RequestParam(value = "remark", required = false) String remark,
+			@RequestParam(value = "autotest", required = false) String autotest,
 			@RequestParam(value = "file") MultipartFile file) {
 		AppInfoBo appInfo = new AppInfoBo();
 		appInfo.setEnv(env);
 		appInfo.setType(type);
 		appInfo.setVersion(version);
 		appInfo.setRemark(remark);
+		appInfo.setAutotest(autotest);
 		return appInfoService.uploadFile(appInfo, file);
 	}
 
 	@RequestMapping(value = "/applist", method = { RequestMethod.GET })
 	public Result<AppInfoListBo> getApiList(@RequestParam(required = false) String env,
 			@RequestParam(required = false) String type, @RequestParam(required = false) String version,
-			@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
+			@RequestParam(required = false) String autotest, @RequestParam Integer pageNum,
+			@RequestParam Integer pageSize) {
 		Result<AppInfoListBo> result = new Result<AppInfoListBo>();
 		result.setCode(1);
 		result.setMessage("查询成功");
@@ -62,10 +65,15 @@ public class AppController {
 			version = null;
 		}
 
+		if ("".equals(autotest)) {
+			autotest = null;
+		}
+
 		AppInfoList appInfoList = new AppInfoList();
 		appInfoList.setEnv(env);
 		appInfoList.setType(type);
 		appInfoList.setVersion(version);
+		appInfoList.setAutotest(autotest);
 
 		AppInfoListBo apps = appInfoService.selectApps(appInfoList, pageNum, pageSize);
 

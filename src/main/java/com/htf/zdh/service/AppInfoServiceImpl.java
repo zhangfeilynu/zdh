@@ -48,6 +48,14 @@ public class AppInfoServiceImpl implements AppInfoService {
 
 		List<AppInfoList> list = appInfoListMapper.selectApps(appInfoList);
 
+		for (int i = 0; i < list.size(); i++) {
+			if ("1".equals(list.get(i).getAutotest())) {
+				list.get(i).setAutotest("是");
+			} else {
+				list.get(i).setAutotest("否");
+			}
+		}
+
 		/*
 		 * if (list == null || list.size() < 1) { return null; }
 		 */
@@ -77,6 +85,10 @@ public class AppInfoServiceImpl implements AppInfoService {
 	public Result<AppInfoBo> uploadFile(AppInfoBo appInfo, MultipartFile file) {
 
 		Result<AppInfoBo> result = new Result<AppInfoBo>();
+
+		if (!("1".equals(appInfo.getAutotest()))) {
+			appInfo.setAutotest("0");
+		}
 
 		if (appInfo.getType() == null || "".equals(appInfo.getType())) {
 			result.setCode(40001);
@@ -182,6 +194,7 @@ public class AppInfoServiceImpl implements AppInfoService {
 			appInfoList.setDownloadUrl(downloadUrl);
 			appInfoList.setRemark(appInfo.getRemark());
 			appInfoList.setName(fileName);
+			appInfoList.setAutotest(appInfo.getAutotest());
 			saveAppInfo(appInfoList);
 			// APP上传成功后写入plist文件和html文件
 			if (appInfo.getType().equals("ios")) {

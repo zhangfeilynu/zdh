@@ -10,9 +10,10 @@
 		<result column="upload_time" jdbcType="TIMESTAMP" property="uploadTime" />
 		<result column="remark" jdbcType="VARCHAR" property="remark" />
 		<result column="name" jdbcType="VARCHAR" property="name" />
+		<result column="autotest" jdbcType="VARCHAR" property="autotest" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, env, type, version, download_url, upload_time, remark,name
+		id, env, type, version, download_url, upload_time, remark,name,autotest
 	</sql>
 
 
@@ -34,6 +35,9 @@
 		<if test="version != null">
 			AND version = #{version,jdbcType=VARCHAR}
 		</if>
+		<if test="autotest != null">
+			AND autotest = #{autotest,jdbcType=VARCHAR}
+		</if>
 		ORDER BY upload_time DESC
 	</select>
 
@@ -51,11 +55,11 @@
 	<insert id="insert" parameterType="com.htf.zdh.jdbc.po.AppInfoList">
 		insert into app_info_list (id, env, type,
 		version, download_url, upload_time,
-		remark,name)
+		remark,name,autotest)
 		values (#{id,jdbcType=INTEGER}, #{env,jdbcType=VARCHAR},
 		#{type,jdbcType=VARCHAR},
 		#{version,jdbcType=VARCHAR}, #{downloadUrl,jdbcType=VARCHAR}, #{uploadTime,jdbcType=TIMESTAMP},
-		#{remark,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR})
+		#{remark,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{autotest,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.htf.zdh.jdbc.po.AppInfoList">
 		insert into app_info_list
@@ -84,6 +88,9 @@
 			<if test="name != null">
 				name,
 			</if>
+			<if test="autotest != null">
+				autotest,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -109,6 +116,9 @@
 			</if>
 			<if test="name != null">
 				#{name,jdbcType=VARCHAR},
+			</if>
+			<if test="autotest != null">
+				#{autotest,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -136,6 +146,9 @@
 			<if test="name != null">
 				name = #{name,jdbcType=VARCHAR},
 			</if>
+			<if test="autotest != null">
+				autotest = #{autotest,jdbcType=VARCHAR},
+			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
@@ -147,7 +160,8 @@
 		download_url = #{downloadUrl,jdbcType=VARCHAR},
 		upload_time = #{uploadTime,jdbcType=TIMESTAMP},
 		remark = #{remark,jdbcType=VARCHAR},
-		name = #{name,jdbcType=VARCHAR}
+		name = #{name,jdbcType=VARCHAR},
+		autotest = #{autotest,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>

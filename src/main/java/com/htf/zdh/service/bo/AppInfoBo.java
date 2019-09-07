@@ -10,9 +10,18 @@ public class AppInfoBo implements Serializable {
 	private String type;
 	private String version;
 	private String remark;
+	private String autotest;
 
 	public String getEnv() {
 		return env;
+	}
+
+	public String getAutotest() {
+		return autotest;
+	}
+
+	public void setAutotest(String autotest) {
+		this.autotest = autotest;
 	}
 
 	public void setEnv(String env) {
