@@ -4,6 +4,13 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,11 +20,18 @@ public class IOSUtil {
 	private static final Logger logger = LoggerFactory.getLogger(IOSUtil.class);
 
 	public static void main(String[] args) {
-		String path = "F:\\htf\\upload\\";
+		// String path = "F:\\htf\\upload\\";
 
 		// createPlist(path, "xxxy", "com.htf.mclient.Uat35",
 		// "http://10.50.16.230/sit/ios/5.5/HTF_5.50_201909041100.ipa");
-		createHtml(path, "xxxx", "sss");
+		// createHtml(path, "xxxx", "sss");
+		// encryption("sgshhg\\\\\\///// ****%%%%$$$$ 飒飒看");
+		String str = "5.20";
+		if (testNum(str)) {
+			logger.info("正确");
+		} else {
+			logger.info("错误");
+		}
 
 	}
 
@@ -123,6 +137,52 @@ public class IOSUtil {
 		}
 		logger.info("==========成功创建html文件");
 
+	}
+
+	public static String encryption(String plain) {
+		String re_md5 = new String();
+		try {
+			MessageDigest md = MessageDigest.getInstance("MD5");
+			md.update(plain.getBytes());
+			byte b[] = md.digest();
+
+			int i;
+
+			StringBuffer buf = new StringBuffer("");
+			for (int offset = 0; offset < b.length; offset++) {
+				i = b[offset];
+				if (i < 0)
+					i += 256;
+				if (i < 16)
+					buf.append("0");
+				buf.append(Integer.toHexString(i));
+			}
+
+			// re_md5 = buf.toString();// 32位加密
+			// logger.info("32位：" + re_md5);
+			// logger.info("16位:" + buf.toString().substring(8, 24));
+			re_md5 = buf.toString().substring(8, 24);// 16位加密
+
+		} catch (NoSuchAlgorithmException e) {
+			e.printStackTrace();
+		}
+		return re_md5;
+	}
+
+	public static boolean testStr(String str) {// 判断是纯字母
+		String regEx = "[^a-zA-Z]"; //
+		Pattern p = Pattern.compile(regEx);
+		Matcher m = p.matcher(str);
+		boolean result = m.find();
+		return !result;
+	}
+
+	public static boolean testNum(String str) {// 判断是正数，含小数
+		String regEx = "^\\d+(\\.\\d+)?$"; //
+		Pattern p = Pattern.compile(regEx);
+		Matcher m = p.matcher(str);
+		boolean result = m.find();
+		return result;
 	}
 
 }

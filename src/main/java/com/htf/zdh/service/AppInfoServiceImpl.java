@@ -118,9 +118,21 @@ public class AppInfoServiceImpl implements AppInfoService {
 
 		String filePath = "";
 
+		String env = appInfo.getEnv();
+		String version = appInfo.getVersion();
+
+		if (!IOSUtil.testStr(env)) {
+			appInfo.setEnv(IOSUtil.encryption(env));
+		}
+
+		if (!IOSUtil.testNum(version)) {
+			appInfo.setVersion(IOSUtil.encryption(version));
+		}
+
 		if ("dev".equals(env)) {
 			filePath = basePath + "\\" + appInfo.getEnv() + "\\" + appInfo.getType() + "\\" + appInfo.getVersion()
 					+ "\\";
+
 		} else {
 			filePath = basePath + "/" + appInfo.getEnv() + "/" + appInfo.getType() + "/" + appInfo.getVersion() + "/";
 		}
@@ -142,6 +154,9 @@ public class AppInfoServiceImpl implements AppInfoService {
 		}
 
 		String ext = fileName.substring(length - 3, length);
+		String pre = fileName.substring(0, length - 4);
+		String md5Pre = IOSUtil.encryption(pre);
+
 		if (!("apk".equalsIgnoreCase(ext) || "ipa".equalsIgnoreCase(ext))) {
 			result.setCode(40004);
 			result.setMessage("上传失败，只能上传apk或者ipa文件");
@@ -168,7 +183,9 @@ public class AppInfoServiceImpl implements AppInfoService {
 			dir.mkdirs();
 		}
 
-		File dest = new File(filePath + fileName);
+		String md5Filename = md5Pre + "." + ext;
+
+		File dest = new File(filePath + md5Filename);
 		if (dest.exists()) {
 			result.setCode(40005);
 			result.setMessage("上传失败，文件已存在");
@@ -186,23 +203,24 @@ public class AppInfoServiceImpl implements AppInfoService {
 			 */
 			String downloadUrl = "";
 			downloadUrl = baseDownloadUrl + "/" + appInfo.getEnv() + "/" + appInfo.getType() + "/"
-					+ appInfo.getVersion() + "/" + fileName;
+					+ appInfo.getVersion() + "/" + md5Filename;
+			logger.info("下载地址是" + downloadUrl);
 			AppInfoList appInfoList = new AppInfoList();
-			appInfoList.setEnv(appInfo.getEnv());
+			appInfoList.setEnv(env);
 			appInfoList.setType(appInfo.getType());
-			appInfoList.setVersion(appInfo.getVersion());
+			appInfoList.setVersion(version);
 			appInfoList.setDownloadUrl(downloadUrl);
 			appInfoList.setRemark(appInfo.getRemark());
 			appInfoList.setName(fileName);
 			appInfoList.setAutotest(appInfo.getAutotest());
 			saveAppInfo(appInfoList);
+
 			// APP上传成功后写入plist文件和html文件
 			if (appInfo.getType().equals("ios")) {
-				IOSUtil.createPlist(filePath, fileName.substring(0, fileName.length() - 4), "com.htf.mclient.Uat35",
-						downloadUrl);
+				IOSUtil.createPlist(filePath, md5Pre, "com.htf.mclient.Uat35", downloadUrl);
 				String plistUrl = "https://10.50.16.230" + "/" + appInfo.getEnv() + "/" + appInfo.getType() + "/"
-						+ appInfo.getVersion() + "/" + fileName.substring(0, fileName.length() - 4) + ".plist";
-				IOSUtil.createHtml(filePath, fileName.substring(0, fileName.length() - 4), plistUrl);
+						+ appInfo.getVersion() + "/" + md5Pre + ".plist";
+				IOSUtil.createHtml(filePath, md5Pre, plistUrl);
 			}
 
 			return result;
