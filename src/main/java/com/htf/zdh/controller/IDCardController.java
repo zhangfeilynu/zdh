@@ -35,7 +35,7 @@ public class IDCardController {
 
 		logger.info("获取随机身份证号码...");
 		Map<String, String> map = new HashMap<>();
-		map.put("idNo", idCardService.generate(areaCode, birth));
+		map.put("idNo", idCardService.generate2(areaCode, birth));
 		return map;
 	}
 

@@ -3553,6 +3553,26 @@ public class IdCardServiceImpl implements IdCardService {
 		return generater.toString();
 	}
 
+	@Override
+	public String generate2(Integer areaCcode, String year) {
+		StringBuilder generater = new StringBuilder();
+		if (areaCcode == null) {
+			generater.append(this.getRandomArea());
+		} else {
+			generater.append(areaCcode);
+		}
+		if (year == null || year.isEmpty()) {
+			generater.append(this.getRandomBirthday());
+		} else {
+			generater.append(year);
+			generater.append(this.getRandomMonthDay());
+		}
+
+		generater.append(this.getRandomNumber());
+		generater.append(this.getTestCode(generater.toString().toCharArray()));
+		return generater.toString();
+	}
+
 	/**
 	 * 随机获取地区
 	 *
@@ -3584,6 +3604,32 @@ public class IdCardServiceImpl implements IdCardService {
 
 		StringBuilder builder = new StringBuilder();
 		builder.append(birthday.get(Calendar.YEAR));
+		long month = birthday.get(Calendar.MONTH) + 1;
+		if (month < 10) {
+			builder.append("0");
+		}
+		builder.append(month);
+		long date = birthday.get(Calendar.DATE);
+		if (date < 10) {
+			builder.append("0");
+		}
+		builder.append(date);
+		return builder.toString();
+	}
+
+	/**
+	 * 随机获取生日（月+日）
+	 *
+	 * @return
+	 */
+	private String getRandomMonthDay() {
+		Calendar birthday = Calendar.getInstance();
+		// birthday.set(Calendar.YEAR, (int) (Math.random() * 60) + 1950);
+		birthday.set(Calendar.MONTH, (int) (Math.random() * 12));
+		birthday.set(Calendar.DATE, (int) (Math.random() * 31));
+
+		StringBuilder builder = new StringBuilder();
+		// builder.append(birthday.get(Calendar.YEAR));
 		long month = birthday.get(Calendar.MONTH) + 1;
 		if (month < 10) {
 			builder.append("0");

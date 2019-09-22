@@ -90,11 +90,11 @@ public class AppInfoServiceImpl implements AppInfoService {
 			appInfo.setAutotest("0");
 		}
 
-		if (appInfo.getType() == null || "".equals(appInfo.getType())) {
-			result.setCode(40001);
-			result.setMessage("缺少请求参数：类型type");
-			return result;
-		}
+		// if (appInfo.getType() == null || "".equals(appInfo.getType())) {
+		// result.setCode(40001);
+		// result.setMessage("缺少请求参数：类型type");
+		// return result;
+		// }
 
 		if (appInfo.getEnv() == null || "".equals(appInfo.getEnv())) {
 			// result.setCode(40001);
@@ -109,12 +109,13 @@ public class AppInfoServiceImpl implements AppInfoService {
 			result.setMessage("缺少请求参数：版本version");
 			return result;
 		}
-
-		if (!("ios".equals(appInfo.getType()) || "android".equals(appInfo.getType()))) {
-			result.setCode(40002);
-			result.setMessage("app类型错误，只能填写android或者ios");
-			return result;
-		}
+		//
+		// if (!("ios".equals(appInfo.getType()) ||
+		// "android".equals(appInfo.getType()))) {
+		// result.setCode(40002);
+		// result.setMessage("app类型错误，只能填写android或者ios");
+		// return result;
+		// }
 
 		String filePath = "";
 
@@ -127,14 +128,6 @@ public class AppInfoServiceImpl implements AppInfoService {
 
 		if (!IOSUtil.testNum(version)) {
 			appInfo.setVersion(IOSUtil.encryption(version));
-		}
-
-		if ("dev".equals(env)) {
-			filePath = basePath + "\\" + appInfo.getEnv() + "\\" + appInfo.getType() + "\\" + appInfo.getVersion()
-					+ "\\";
-
-		} else {
-			filePath = basePath + "/" + appInfo.getEnv() + "/" + appInfo.getType() + "/" + appInfo.getVersion() + "/";
 		}
 
 		if (file.isEmpty()) {
@@ -154,8 +147,28 @@ public class AppInfoServiceImpl implements AppInfoService {
 		}
 
 		String ext = fileName.substring(length - 3, length);
+		if (!("apk".equalsIgnoreCase(ext) || "ipa".equalsIgnoreCase(ext))) {
+			result.setCode(40003);
+			result.setMessage("上传失败，只能上传.apk或者.ipa文件");
+			return result;
+		}
+
 		String pre = fileName.substring(0, length - 4);
 		String md5Pre = IOSUtil.encryption(pre);
+		String type = "";
+		if ("apk".equalsIgnoreCase(ext)) {
+			type = "android";
+		}
+		if ("ipa".equalsIgnoreCase(ext)) {
+			type = "ios";
+		}
+
+		if ("dev".equals(env)) {
+			filePath = basePath + "\\" + appInfo.getEnv() + "\\" + type + "\\" + appInfo.getVersion() + "\\";
+
+		} else {
+			filePath = basePath + "/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/";
+		}
 
 		if (!("apk".equalsIgnoreCase(ext) || "ipa".equalsIgnoreCase(ext))) {
 			result.setCode(40004);
@@ -163,21 +176,21 @@ public class AppInfoServiceImpl implements AppInfoService {
 			return result;
 		}
 
-		if ("android".equalsIgnoreCase(appInfo.getType())) {
-			if (!"apk".equalsIgnoreCase(ext)) {
-				result.setCode(40003);
-				result.setMessage("上传失败，类型为android时，文件扩展名必须为apk");
-				return result;
-			}
-		}
-
-		if ("ios".equalsIgnoreCase(appInfo.getType())) {
-			if (!"ipa".equalsIgnoreCase(ext)) {
-				result.setCode(40003);
-				result.setMessage("上传失败，类型为ios时，文件扩展名必须为ipa");
-				return result;
-			}
-		}
+		// if ("android".equalsIgnoreCase(appInfo.getType())) {
+		// if (!"apk".equalsIgnoreCase(ext)) {
+		// result.setCode(40003);
+		// result.setMessage("上传失败，类型为android时，文件扩展名必须为apk");
+		// return result;
+		// }
+		// }
+		//
+		// if ("ios".equalsIgnoreCase(appInfo.getType())) {
+		// if (!"ipa".equalsIgnoreCase(ext)) {
+		// result.setCode(40003);
+		// result.setMessage("上传失败，类型为ios时，文件扩展名必须为ipa");
+		// return result;
+		// }
+		// }
 		File dir = new File(filePath);
 		if (!dir.exists()) {
 			dir.mkdirs();
@@ -202,12 +215,12 @@ public class AppInfoServiceImpl implements AppInfoService {
 			 * 上传成功后，APP信息写入mysql
 			 */
 			String downloadUrl = "";
-			downloadUrl = baseDownloadUrl + "/" + appInfo.getEnv() + "/" + appInfo.getType() + "/"
-					+ appInfo.getVersion() + "/" + md5Filename;
+			downloadUrl = baseDownloadUrl + "/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/"
+					+ md5Filename;
 			logger.info("下载地址是" + downloadUrl);
 			AppInfoList appInfoList = new AppInfoList();
 			appInfoList.setEnv(env);
-			appInfoList.setType(appInfo.getType());
+			appInfoList.setType(type);
 			appInfoList.setVersion(version);
 			appInfoList.setDownloadUrl(downloadUrl);
 			appInfoList.setRemark(appInfo.getRemark());
@@ -216,9 +229,9 @@ public class AppInfoServiceImpl implements AppInfoService {
 			saveAppInfo(appInfoList);
 
 			// APP上传成功后写入plist文件和html文件
-			if (appInfo.getType().equals("ios")) {
+			if ("ios".equals(type)) {
 				IOSUtil.createPlist(filePath, md5Pre, "com.htf.mclient.Uat35", downloadUrl);
-				String plistUrl = "https://10.50.16.230" + "/" + appInfo.getEnv() + "/" + appInfo.getType() + "/"
+				String plistUrl = "https://10.50.16.230" + "/" + appInfo.getEnv() + "/" + type + "/"
 						+ appInfo.getVersion() + "/" + md5Pre + ".plist";
 				IOSUtil.createHtml(filePath, md5Pre, plistUrl);
 			}

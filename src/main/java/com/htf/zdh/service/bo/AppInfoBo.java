@@ -7,7 +7,7 @@ public class AppInfoBo implements Serializable {
 	private static final long serialVersionUID = -4092913755552100581L;
 
 	private String env;
-	private String type;
+	// private String type;
 	private String version;
 	private String remark;
 	private String autotest;
@@ -28,13 +28,13 @@ public class AppInfoBo implements Serializable {
 		this.env = env;
 	}
 
-	public String getType() {
-		return type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
+	// public String getType() {
+	// return type;
+	// }
+	//
+	// public void setType(String type) {
+	// this.type = type;
+	// }
 
 	public String getVersion() {
 		return version;
