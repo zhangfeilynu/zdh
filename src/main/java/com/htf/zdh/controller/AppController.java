@@ -7,13 +7,14 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.htf.zdh.controller.vo.Result;
@@ -23,7 +24,8 @@ import com.htf.zdh.service.bo.AppInfoBo;
 import com.htf.zdh.service.bo.AppInfoListBo;
 import com.htf.zdh.utils.QrCodeUtil;
 
-@RestController
+@Api(description = "app上传查询下载")
+@RestController("app")
 @RequestMapping(value = "app")
 public class AppController {
 	private static final Logger logger = LoggerFactory.getLogger(AppController.class);
@@ -31,7 +33,16 @@ public class AppController {
 	@Autowired
 	private AppInfoService appInfoService;
 
+	@ApiOperation(value = "上传APP", notes="上传APP到服务器")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name="env",value="测试环境，默认UAT",required=false,paramType="form",dataType="string"),
+			@ApiImplicitParam(name="version",value="app版本号，例如5.50",required=true,paramType="form",dataType="string"),
+			@ApiImplicitParam(name="remark",value="备注",required=false,paramType="form",dataType="string"),
+			@ApiImplicitParam(name="autotest",value="0非自动化测试包，1自动化测试包，默认0",required=false,paramType="form",dataType="string"),
+			@ApiImplicitParam(name="file",value="文件",required=true,paramType="form",dataType="file")
+	})
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	@ResponseBody
 	public Result<AppInfoBo> uploadFile(@RequestParam(value = "env", required = false) String env,
 			@RequestParam(value = "version") String version,
 			@RequestParam(value = "remark", required = false) String remark,
@@ -45,7 +56,17 @@ public class AppController {
 		return appInfoService.uploadFile(appInfo, file);
 	}
 
+	@ApiOperation(value = "查询APP", notes="查询APP")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name="env",value="测试环境，例如UAT、SIT",required=false,paramType="query",dataType="string"),
+			@ApiImplicitParam(name="type",value="app类型，android或者ios",required=false,paramType="query",dataType="string"),
+			@ApiImplicitParam(name="version",value="app版本号，例如5.50",required=false,paramType="query",dataType="string"),
+			@ApiImplicitParam(name="autotest",value="0非自动化测试包，1自动化测试包，默认0",required=false,paramType="query",dataType="string"),
+			@ApiImplicitParam(name="pageNum",value="页码",required=true,paramType="query",dataType="int"),
+			@ApiImplicitParam(name="pageSize",value="每页显示的数量",required=true,paramType="query",dataType="int")
+	})
 	@RequestMapping(value = "/applist", method = { RequestMethod.GET })
+	@ResponseBody
 	public Result<AppInfoListBo> getApiList(@RequestParam(required = false) String env,
 			@RequestParam(required = false) String type, @RequestParam(required = false) String version,
 			@RequestParam(required = false) String autotest, @RequestParam Integer pageNum,
@@ -80,7 +101,10 @@ public class AppController {
 		return result;
 	}
 
+	@ApiOperation(value = "生成二维码", notes="把下载地址转为二维码")
+	@ApiImplicitParam(name="url",value="下载地址",required=true,paramType="query",dataType="string")
 	@RequestMapping(value = "/qrcode", method = { RequestMethod.GET })
+	@ResponseBody
 	public void getQrCode(@RequestParam String url, HttpServletResponse response) {
 		QrCodeUtil qrCodeUtil = new QrCodeUtil();
 		BufferedImage image = qrCodeUtil.createQrCode(url);

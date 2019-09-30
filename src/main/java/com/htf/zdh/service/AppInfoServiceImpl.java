@@ -37,6 +37,9 @@ public class AppInfoServiceImpl implements AppInfoService {
 	@Value("${baseDownloadUrl}")
 	private String baseDownloadUrl;
 
+	public AppInfoServiceImpl() {
+	}
+
 	@Override
 	public AppInfoListBo selectApps(AppInfoList appInfoList, Integer pageNum, Integer pageSize) {
 
