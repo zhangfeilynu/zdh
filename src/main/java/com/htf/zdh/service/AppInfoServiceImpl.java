@@ -164,12 +164,14 @@ public class AppInfoServiceImpl implements AppInfoService {
 			type = "ios";
 		}
 
-		if ("dev".equals(env)) {
-			filePath = basePath + "\\" + appInfo.getEnv() + "\\" + type + "\\" + appInfo.getVersion() + "\\";
+//		if ("dev".equals(env)) {
+//			filePath = basePath + "\\" + appInfo.getEnv() + "\\" + type + "\\" + appInfo.getVersion() + "\\";
+//
+//		} else {
+//			filePath = basePath + "/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/";
+//		}
 
-		} else {
-			filePath = basePath + "/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/";
-		}
+		filePath = basePath + "/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/";
 
 		if (!("apk".equalsIgnoreCase(ext) || "ipa".equalsIgnoreCase(ext))) {
 			result.setCode(40004);
