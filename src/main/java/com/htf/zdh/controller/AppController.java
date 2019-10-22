@@ -25,7 +25,7 @@ import com.htf.zdh.service.bo.AppInfoBo;
 import com.htf.zdh.service.bo.AppInfoListBo;
 import com.htf.zdh.utils.QrCodeUtil;
 
-@Api(description = "app上传查询下载")
+@Api(tags = { "app相关" })
 @RestController("app")
 @RequestMapping(value = "app")
 public class AppController {

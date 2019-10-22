@@ -14,8 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import com.htf.zdh.service.IdCardService;
 
-
-@Api(description = "生成随机身份证号码")
+@Api(tags = { "生成随机身份证号码" })
 @RestController("id")
 @RequestMapping(value = "id")
 public class IDCardController {
@@ -24,13 +23,10 @@ public class IDCardController {
 	@Autowired
 	private IdCardService idCardService;
 
-
-
-	@ApiOperation(value = "查询APP", notes="查询APP")
+	@ApiOperation(value = "查询APP", notes = "查询APP")
 	@ApiImplicitParams({
-			@ApiImplicitParam(name="areaCode",value="区域代码，6位数字，例如411521",required=false,paramType="query",dataType="int"),
-			@ApiImplicitParam(name="birth",value="出生年份",required=false,paramType="query",dataType="string")
-	})
+			@ApiImplicitParam(name = "areaCode", value = "区域代码，6位数字，例如411521", required = false, paramType = "query", dataType = "int"),
+			@ApiImplicitParam(name = "birth", value = "出生年份", required = false, paramType = "query", dataType = "string") })
 	@RequestMapping(value = "/randomIdNo", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public Map<String, String> getIDCard(@RequestParam(value = "areaCode", required = false) Integer areaCode,
