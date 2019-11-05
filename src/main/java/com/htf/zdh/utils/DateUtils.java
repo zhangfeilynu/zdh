@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 public class DateUtils {
 
@@ -22,28 +23,62 @@ public class DateUtils {
 		// + s + "秒");
 		//
 		// System.out.println(getWeek());
-		String s = "2019-10-15";
+		// String s = "2019-10-15";
 
-		String[] sArray = s.split("-");
-		System.out.println(getDateStr1());
+		// String[] sArray = s.split("-");
+		System.out.println(getDateNext());
 
 	}
 
 	// 获取当前日期，格式2019-10-15
 
 	public static String getDateStr1() {
-		Calendar cal = Calendar.getInstance();
-		int y = cal.get(Calendar.YEAR);
-		int m = cal.get(Calendar.MONTH) + 1;
-		int d = cal.get(Calendar.DATE);
-		return y + "-" + m + "-" + d;
+		// Calendar cal = Calendar.getInstance();
+		// int y = cal.get(Calendar.YEAR);
+		// int m = cal.get(Calendar.MONTH) + 1;
+		// int d = cal.get(Calendar.DATE);
+		// String conn1 = "-";
+		// String conn2 = "-";
+		// // if (m < 10) {
+		// // conn1 = "-0";
+		// // }
+		// return y + conn1 + m + conn2 + d;
+		Date d = new Date();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(d);
 	}
 
-	// 截取日期2019-10-14，转变为10月14日
+	public static String getDateNext() {// 明天
+		// Calendar cal = Calendar.getInstance();
+		// int y = cal.get(Calendar.YEAR);
+		// int m = cal.get(Calendar.MONTH) + 1;
+		// int d = cal.get(Calendar.DATE) + 1;
+		// return y + "-" + m + "-" + d;
+		Date date = new Date();// 取时间
+		Calendar calendar = new GregorianCalendar();
+		calendar.setTime(date);
+		calendar.add(Calendar.DATE, 1);// 把日期往后增加一天.整数往后推,负数往前移动
+		date = calendar.getTime(); // 这个时间就是日期往后推一天的结果
+
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+		return format.format(date);
+
+	}
+
+	// 截取日期2020-01-08，转变为1月8日
 	public static String getDateStr2(String dateStr) {
 		String[] sArray = dateStr.split("-");
 		if (sArray.length != 3)
 			return null;
+
+		if ("0".equals(sArray[1].substring(0, 1))) {// 01-09去掉第一个0
+			sArray[1] = sArray[1].substring(1);
+		}
+
+		if ("0".equals(sArray[2].substring(0, 1))) {
+			sArray[2] = sArray[2].substring(1);
+		}
+
 		return sArray[1] + "月" + sArray[2] + "日";
 
 	}
