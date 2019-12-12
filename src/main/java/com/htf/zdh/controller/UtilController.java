@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.htf.zdh.utils.DateUtils;
 import com.htf.zdh.utils.MathUtil;
 
 import io.swagger.annotations.Api;
@@ -37,6 +38,17 @@ public class UtilController {
 	public String formatDoubleLeafN(@RequestParam double dividend, @RequestParam double divisor) {
 
 		return MathUtil.formatDoubleLeafN(dividend, divisor);
+
+	}
+
+	@ApiOperation(value = "获取当前日期下一个1号", notes = "获取当前日期下一个1号")
+	// @ApiImplicitParam(name = "num", value = "小数", required = true, paramType =
+	// "query", dataType = "double")
+	@RequestMapping(value = "/nextMonthFirstDay", method = { RequestMethod.GET })
+	@ResponseBody
+	public String nextMonthFirstDay() {
+
+		return DateUtils.nextMonthFirstDay();
 
 	}
 

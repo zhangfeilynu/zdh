@@ -26,8 +26,18 @@ public class DateUtils {
 		// String s = "2019-10-15";
 
 		// String[] sArray = s.split("-");
-		System.out.println(getDateNext());
+		System.out.println(nextMonthFirstDay());
 
+	}
+
+	// 获取当前日期下一个1号
+	public static String nextMonthFirstDay() {
+		Calendar calendar = Calendar.getInstance();
+		calendar.set(Calendar.DAY_OF_MONTH, 1);
+		calendar.add(Calendar.MONTH, 1);
+		// return calendar.getTime();
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(calendar.getTime());
 	}
 
 	// 获取当前日期，格式2019-10-15
