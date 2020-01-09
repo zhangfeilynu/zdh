@@ -1,5 +1,6 @@
 package com.htf.zdh.utils;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -7,6 +8,8 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class DateUtils {
+
+	private static final DateFormat ymdhmsStdDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 	public static void main(String[] args) {
 		// Calendar cal = Calendar.getInstance();
@@ -26,8 +29,12 @@ public class DateUtils {
 		// String s = "2019-10-15";
 
 		// String[] sArray = s.split("-");
-		System.out.println(nextMonthFirstDay());
+		System.out.println(getYMDHMSStd());
 
+	}
+
+	public static String getYMDHMSStd() {
+		return ymdhmsStdDateFormat.format(new Date());
 	}
 
 	// 获取当前日期下一个1号

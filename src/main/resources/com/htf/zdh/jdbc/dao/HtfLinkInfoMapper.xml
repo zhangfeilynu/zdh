@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.htf.zdh.jdbc.dao.HtfLinkInfoMapper">
+  <resultMap id="BaseResultMap" type="com.htf.zdh.jdbc.po.HtfLinkInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="function_type" jdbcType="VARCHAR" property="functionType" />
+    <result column="function_name" jdbcType="VARCHAR" property="functionName" />
+    <result column="link_details" jdbcType="VARCHAR" property="linkDetails" />
+    <result column="link_status" jdbcType="CHAR" property="linkStatus" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
+    <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
+    <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
+    <result column="created_date" jdbcType="VARCHAR" property="createdDate" />
+    <result column="updated_date" jdbcType="TIMESTAMP" property="updatedDate" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, function_type, function_name, link_details, link_status, remark, created_by, updated_by, 
+    created_date, updated_date
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from htf_link_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+  <select id="selectAll"  resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from htf_link_info
+    order by function_type
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from htf_link_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.htf.zdh.jdbc.po.HtfLinkInfo">
+    insert into htf_link_info (id, function_type, function_name, 
+      link_details, link_status, remark, 
+      created_by, updated_by, created_date, 
+      updated_date)
+    values (#{id,jdbcType=INTEGER}, #{functionType,jdbcType=VARCHAR}, #{functionName,jdbcType=VARCHAR}, 
+      #{linkDetails,jdbcType=VARCHAR}, #{linkStatus,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=VARCHAR}, 
+      #{updatedDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.htf.zdh.jdbc.po.HtfLinkInfo">
+    insert into htf_link_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="functionType != null">
+        function_type,
+      </if>
+      <if test="functionName != null">
+        function_name,
+      </if>
+      <if test="linkDetails != null">
+        link_details,
+      </if>
+      <if test="linkStatus != null">
+        link_status,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createdBy != null">
+        created_by,
+      </if>
+      <if test="updatedBy != null">
+        updated_by,
+      </if>
+      <if test="createdDate != null">
+        created_date,
+      </if>
+      <if test="updatedDate != null">
+        updated_date,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="functionType != null">
+        #{functionType,jdbcType=VARCHAR},
+      </if>
+      <if test="functionName != null">
+        #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkDetails != null">
+        #{linkDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="linkStatus != null">
+        #{linkStatus,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        #{createdDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDate != null">
+        #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.htf.zdh.jdbc.po.HtfLinkInfo">
+    update htf_link_info
+    <set>
+      <if test="functionType != null">
+        function_type = #{functionType,jdbcType=VARCHAR},
+      </if>
+      <if test="functionName != null">
+        function_name = #{functionName,jdbcType=VARCHAR},
+      </if>
+      <if test="linkDetails != null">
+        link_details = #{linkDetails,jdbcType=VARCHAR},
+      </if>
+      <if test="linkStatus != null">
+        link_status = #{linkStatus,jdbcType=CHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createdBy != null">
+        created_by = #{createdBy,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedBy != null">
+        updated_by = #{updatedBy,jdbcType=VARCHAR},
+      </if>
+      <if test="createdDate != null">
+        created_date = #{createdDate,jdbcType=VARCHAR},
+      </if>
+      <if test="updatedDate != null">
+        updated_date = #{updatedDate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.htf.zdh.jdbc.po.HtfLinkInfo">
+    update htf_link_info
+    set function_type = #{functionType,jdbcType=VARCHAR},
+      function_name = #{functionName,jdbcType=VARCHAR},
+      link_details = #{linkDetails,jdbcType=VARCHAR},
+      link_status = #{linkStatus,jdbcType=CHAR},
+      remark = #{remark,jdbcType=VARCHAR},
+      created_by = #{createdBy,jdbcType=VARCHAR},
+      updated_by = #{updatedBy,jdbcType=VARCHAR},
+      created_date = #{createdDate,jdbcType=VARCHAR},
+      updated_date = #{updatedDate,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
