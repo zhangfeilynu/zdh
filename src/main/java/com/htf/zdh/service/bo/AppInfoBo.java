@@ -11,6 +11,7 @@ public class AppInfoBo implements Serializable {
 	private String version;
 	private String remark;
 	private String autotest;
+	private String appName;
 
 	public String getEnv() {
 		return env;
@@ -28,14 +29,6 @@ public class AppInfoBo implements Serializable {
 		this.env = env;
 	}
 
-	// public String getType() {
-	// return type;
-	// }
-	//
-	// public void setType(String type) {
-	// this.type = type;
-	// }
-
 	public String getVersion() {
 		return version;
 	}
@@ -50,6 +43,14 @@ public class AppInfoBo implements Serializable {
 
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+
+	public String getAppName() {
+		return appName;
+	}
+
+	public void setAppName(String appName) {
+		this.appName = appName;
 	}
 
 }

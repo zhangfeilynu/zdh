@@ -37,7 +37,6 @@ public class AppInfoServiceImpl implements AppInfoService {
 	@Value("${baseDownloadUrl}")
 	private String baseDownloadUrl;
 
-
 	@Override
 	public AppInfoListBo selectApps(AppInfoList appInfoList, Integer pageNum, Integer pageSize) {
 
@@ -55,11 +54,8 @@ public class AppInfoServiceImpl implements AppInfoService {
 			} else {
 				list.get(i).setAutotest("否");
 			}
-		}
 
-		/*
-		 * if (list == null || list.size() < 1) { return null; }
-		 */
+		}
 
 		// 获取总记录数
 		PageInfo<AppInfoList> pageInfo = new PageInfo<AppInfoList>(list);
@@ -91,32 +87,20 @@ public class AppInfoServiceImpl implements AppInfoService {
 			appInfo.setAutotest("0");
 		}
 
-		// if (appInfo.getType() == null || "".equals(appInfo.getType())) {
-		// result.setCode(40001);
-		// result.setMessage("缺少请求参数：类型type");
-		// return result;
-		// }
-
 		if (appInfo.getEnv() == null || "".equals(appInfo.getEnv())) {
-			// result.setCode(40001);
-			// result.setMessage("缺少请求参数:环境env");
-			// return result;
 			appInfo.setEnv("UAT");
 		}
 		appInfo.setEnv(appInfo.getEnv().toUpperCase());
+
+		if (appInfo.getAppName() == null || "".equals(appInfo.getAppName())) {
+			appInfo.setAppName("现金宝");
+		}
 
 		if (appInfo.getVersion() == null || "".equals(appInfo.getVersion())) {
 			result.setCode(40001);
 			result.setMessage("缺少请求参数：版本version");
 			return result;
 		}
-		//
-		// if (!("ios".equals(appInfo.getType()) ||
-		// "android".equals(appInfo.getType()))) {
-		// result.setCode(40002);
-		// result.setMessage("app类型错误，只能填写android或者ios");
-		// return result;
-		// }
 
 		String filePath = "";
 
@@ -165,10 +149,21 @@ public class AppInfoServiceImpl implements AppInfoService {
 		}
 
 		if ("dev".equals(env)) {
-			filePath = basePath + "\\" + appInfo.getEnv() + "\\" + type + "\\" + appInfo.getVersion() + "\\";
+
+			if ("汇添富小i".equals(appInfo.getAppName())) {
+				filePath = basePath + "\\" + "\\i\\" + appInfo.getEnv() + "\\" + type + "\\" + appInfo.getVersion()
+						+ "\\";
+			} else {
+				filePath = basePath + "\\" + appInfo.getEnv() + "\\" + type + "\\" + appInfo.getVersion() + "\\";
+			}
 
 		} else {
-			filePath = basePath + "/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/";
+
+			if ("汇添富小i".equals(appInfo.getAppName())) {
+				filePath = basePath + "/i/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/";
+			} else {
+				filePath = basePath + "/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/";
+			}
 		}
 
 		if (!("apk".equalsIgnoreCase(ext) || "ipa".equalsIgnoreCase(ext))) {
@@ -177,21 +172,6 @@ public class AppInfoServiceImpl implements AppInfoService {
 			return result;
 		}
 
-		// if ("android".equalsIgnoreCase(appInfo.getType())) {
-		// if (!"apk".equalsIgnoreCase(ext)) {
-		// result.setCode(40003);
-		// result.setMessage("上传失败，类型为android时，文件扩展名必须为apk");
-		// return result;
-		// }
-		// }
-		//
-		// if ("ios".equalsIgnoreCase(appInfo.getType())) {
-		// if (!"ipa".equalsIgnoreCase(ext)) {
-		// result.setCode(40003);
-		// result.setMessage("上传失败，类型为ios时，文件扩展名必须为ipa");
-		// return result;
-		// }
-		// }
 		File dir = new File(filePath);
 		if (!dir.exists()) {
 			dir.mkdirs();
@@ -216,8 +196,14 @@ public class AppInfoServiceImpl implements AppInfoService {
 			 * 上传成功后，APP信息写入mysql
 			 */
 			String downloadUrl = "";
-			downloadUrl = baseDownloadUrl + "/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/"
-					+ md5Filename;
+
+			if ("汇添富小i".equals(appInfo.getAppName())) {
+				downloadUrl = baseDownloadUrl + "/i/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/"
+						+ md5Filename;
+			} else {
+				downloadUrl = baseDownloadUrl + "/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/"
+						+ md5Filename;
+			}
 			logger.info("下载地址是" + downloadUrl);
 			AppInfoList appInfoList = new AppInfoList();
 			appInfoList.setEnv(env);
@@ -227,13 +213,23 @@ public class AppInfoServiceImpl implements AppInfoService {
 			appInfoList.setRemark(appInfo.getRemark());
 			appInfoList.setName(fileName);
 			appInfoList.setAutotest(appInfo.getAutotest());
-			saveAppInfo(appInfoList);
+			appInfoList.setAppName(appInfo.getAppName());
+			saveAppInfo(appInfoList);// 上传APP信息写入数据库
 
 			// APP上传成功后写入plist文件和html文件
 			if ("ios".equals(type)) {
-				IOSUtil.createPlist(filePath, md5Pre, "com.htf.mclient.Uat35", downloadUrl);
-				String plistUrl = "https://10.50.16.230" + "/" + appInfo.getEnv() + "/" + type + "/"
-						+ appInfo.getVersion() + "/" + md5Pre + ".plist";
+				String bundleId = "";
+				String plistUrl = "";
+				if ("汇添富小i".equals(appInfo.getAppName())) {
+					bundleId = "com.HTF.HTFIMobilePortal";
+					plistUrl = "https://10.50.16.230" + "/i/" + appInfo.getEnv() + "/" + type + "/"
+							+ appInfo.getVersion() + "/" + md5Pre + ".plist";
+				} else {
+					bundleId = "com.htf.mclient.Uat35";
+					plistUrl = "https://10.50.16.230" + "/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion()
+							+ "/" + md5Pre + ".plist";
+				}
+				IOSUtil.createPlist(filePath, md5Pre, bundleId, appInfo.getAppName(), downloadUrl);
 				IOSUtil.createHtml(filePath, md5Pre, plistUrl);
 			}
 
@@ -252,19 +248,5 @@ public class AppInfoServiceImpl implements AppInfoService {
 		int i = appInfoListMapper.insertSelective(record);
 		return i;
 	}
-
-	// @Override
-	// public String uploadFile(CommonsMultipartFile file) {
-	//
-	// String path = "F:/htf/upload" + new Date().getTime() +
-	// file.getOriginalFilename();
-	// File newFile = new File(path);
-	// try {
-	// file.transferTo(newFile);
-	// } catch (IllegalStateException | IOException e) {
-	// logger.error("保存文件出现异常：" + e.getMessage());
-	// }
-	// return path;
-	// }
 
 }

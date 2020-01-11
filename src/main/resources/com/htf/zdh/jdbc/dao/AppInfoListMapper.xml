@@ -11,11 +11,12 @@
 		<result column="remark" jdbcType="VARCHAR" property="remark" />
 		<result column="name" jdbcType="VARCHAR" property="name" />
 		<result column="autotest" jdbcType="VARCHAR" property="autotest" />
+		<result column="app_name" jdbcType="VARCHAR" property="appName" />
 	</resultMap>
 	<sql id="Base_Column_List">
-		id, env, type, version, download_url, upload_time, remark,name,autotest
+		id, env, type, version, download_url, upload_time, remark, name,
+		autotest, app_name
 	</sql>
-
 
 	<select id="selectApps" resultMap="BaseResultMap"
 		parameterType="com.htf.zdh.jdbc.po.AppInfoList">
@@ -27,16 +28,19 @@
 			AND id = #{id,jdbcType=INTEGER}
 		</if>
 		<if test="env != null">
-			AND env = #{env,jdbcType=VARCHAR}
+			AND env like CONCAT('%',#{env,jdbcType=VARCHAR},'%')
 		</if>
 		<if test="type != null">
 			AND type = #{type,jdbcType=VARCHAR}
 		</if>
 		<if test="version != null">
-			AND version = #{version,jdbcType=VARCHAR}
+			AND version like CONCAT('%',#{version,jdbcType=VARCHAR},'%')
 		</if>
 		<if test="autotest != null">
 			AND autotest = #{autotest,jdbcType=VARCHAR}
+		</if>
+		<if test="appName != null">
+			AND app_name = #{appName,jdbcType=VARCHAR}
 		</if>
 		ORDER BY upload_time DESC
 	</select>
@@ -55,11 +59,14 @@
 	<insert id="insert" parameterType="com.htf.zdh.jdbc.po.AppInfoList">
 		insert into app_info_list (id, env, type,
 		version, download_url, upload_time,
-		remark,name,autotest)
+		remark, name, autotest,
+		app_name)
 		values (#{id,jdbcType=INTEGER}, #{env,jdbcType=VARCHAR},
 		#{type,jdbcType=VARCHAR},
 		#{version,jdbcType=VARCHAR}, #{downloadUrl,jdbcType=VARCHAR}, #{uploadTime,jdbcType=TIMESTAMP},
-		#{remark,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{autotest,jdbcType=VARCHAR})
+		#{remark,jdbcType=VARCHAR}, #{name,jdbcType=VARCHAR},
+		#{autotest,jdbcType=VARCHAR},
+		#{appName,jdbcType=VARCHAR})
 	</insert>
 	<insert id="insertSelective" parameterType="com.htf.zdh.jdbc.po.AppInfoList">
 		insert into app_info_list
@@ -91,6 +98,9 @@
 			<if test="autotest != null">
 				autotest,
 			</if>
+			<if test="appName != null">
+				app_name,
+			</if>
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides=",">
 			<if test="id != null">
@@ -119,6 +129,9 @@
 			</if>
 			<if test="autotest != null">
 				#{autotest,jdbcType=VARCHAR},
+			</if>
+			<if test="appName != null">
+				#{appName,jdbcType=VARCHAR},
 			</if>
 		</trim>
 	</insert>
@@ -149,6 +162,9 @@
 			<if test="autotest != null">
 				autotest = #{autotest,jdbcType=VARCHAR},
 			</if>
+			<if test="appName != null">
+				app_name = #{appName,jdbcType=VARCHAR},
+			</if>
 		</set>
 		where id = #{id,jdbcType=INTEGER}
 	</update>
@@ -161,7 +177,8 @@
 		upload_time = #{uploadTime,jdbcType=TIMESTAMP},
 		remark = #{remark,jdbcType=VARCHAR},
 		name = #{name,jdbcType=VARCHAR},
-		autotest = #{autotest,jdbcType=VARCHAR}
+		autotest = #{autotest,jdbcType=VARCHAR},
+		app_name = #{appName,jdbcType=VARCHAR}
 		where id = #{id,jdbcType=INTEGER}
 	</update>
 </mapper>

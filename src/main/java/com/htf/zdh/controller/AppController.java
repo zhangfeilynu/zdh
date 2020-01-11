@@ -41,6 +41,7 @@ public class AppController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "env", value = "测试环境，默认UAT", required = false, paramType = "form", dataType = "string"),
 			@ApiImplicitParam(name = "version", value = "app版本号，例如5.50", required = true, paramType = "form", dataType = "string"),
+			@ApiImplicitParam(name = "appName", value = "app名称，现金宝、汇添富小i，默认现金宝", required = false, paramType = "form", dataType = "string"),
 			@ApiImplicitParam(name = "remark", value = "备注", required = false, paramType = "form", dataType = "string"),
 			@ApiImplicitParam(name = "autotest", value = "0非自动化测试包，1自动化测试包，默认0", required = false, paramType = "form", dataType = "string"),
 			@ApiImplicitParam(name = "file", value = "文件", required = true, paramType = "form", dataType = "file") })
@@ -48,6 +49,7 @@ public class AppController {
 	@ResponseBody
 	public Result<AppInfoBo> uploadFile(@RequestParam(value = "env", required = false) String env,
 			@RequestParam(value = "version") String version,
+			@RequestParam(value = "appName", required = false) String appName,
 			@RequestParam(value = "remark", required = false) String remark,
 			@RequestParam(value = "autotest", required = false) String autotest,
 			@RequestParam(value = "file") MultipartFile file) {
@@ -56,12 +58,14 @@ public class AppController {
 		appInfo.setVersion(version);
 		appInfo.setRemark(remark);
 		appInfo.setAutotest(autotest);
+		appInfo.setAppName(appName);
 		return appInfoService.uploadFile(appInfo, file);
 	}
 
 	@ApiOperation(value = "查询APP", notes = "查询APP")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "env", value = "测试环境，例如UAT、SIT", required = false, paramType = "query", dataType = "string"),
+			@ApiImplicitParam(name = "appName", value = "app名称，现金宝或者汇添富小i", required = false, paramType = "query", dataType = "string"),
 			@ApiImplicitParam(name = "type", value = "app类型，android或者ios", required = false, paramType = "query", dataType = "string"),
 			@ApiImplicitParam(name = "version", value = "app版本号，例如5.50", required = false, paramType = "query", dataType = "string"),
 			@ApiImplicitParam(name = "autotest", value = "0非自动化测试包，1自动化测试包，默认0", required = false, paramType = "query", dataType = "string"),
@@ -70,9 +74,9 @@ public class AppController {
 	@RequestMapping(value = "/applist", method = { RequestMethod.GET })
 	@ResponseBody
 	public Result<AppInfoListBo> getApiList(@RequestParam(required = false) String env,
-			@RequestParam(required = false) String type, @RequestParam(required = false) String version,
-			@RequestParam(required = false) String autotest, @RequestParam Integer pageNum,
-			@RequestParam Integer pageSize) {
+			@RequestParam(required = false) String appName, @RequestParam(required = false) String type,
+			@RequestParam(required = false) String version, @RequestParam(required = false) String autotest,
+			@RequestParam Integer pageNum, @RequestParam Integer pageSize) {
 		Result<AppInfoListBo> result = new Result<AppInfoListBo>();
 		result.setCode(1);
 		result.setMessage("查询成功");
@@ -91,11 +95,16 @@ public class AppController {
 			autotest = null;
 		}
 
+		if ("".equals(appName)) {
+			appName = null;
+		}
+
 		AppInfoList appInfoList = new AppInfoList();
 		appInfoList.setEnv(env);
 		appInfoList.setType(type);
 		appInfoList.setVersion(version);
 		appInfoList.setAutotest(autotest);
+		appInfoList.setAppName(appName);
 
 		AppInfoListBo apps = appInfoService.selectApps(appInfoList, pageNum, pageSize);
 

@@ -3,93 +3,103 @@ package com.htf.zdh.jdbc.po;
 import java.util.Date;
 
 public class AppInfoList {
-	private Integer id;
+    private Integer id;
 
-	private String env;
+    private String env;
 
-	private String type;
+    private String type;
 
-	private String version;
+    private String version;
 
-	private String downloadUrl;
+    private String downloadUrl;
 
-	private Date uploadTime;
+    private Date uploadTime;
 
-	private String remark;
+    private String remark;
 
-	private String name;
+    private String name;
 
-	private String autotest;
+    private String autotest;
 
-	public String getAutotest() {
-		return autotest;
-	}
+    private String appName;
 
-	public void setAutotest(String autotest) {
-		this.autotest = autotest;
-	}
+    public Integer getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(Integer id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getEnv() {
+        return env;
+    }
 
-	public Integer getId() {
-		return id;
-	}
+    public void setEnv(String env) {
+        this.env = env == null ? null : env.trim();
+    }
 
-	public void setId(Integer id) {
-		this.id = id;
-	}
+    public String getType() {
+        return type;
+    }
 
-	public String getEnv() {
-		return env;
-	}
+    public void setType(String type) {
+        this.type = type == null ? null : type.trim();
+    }
 
-	public void setEnv(String env) {
-		this.env = env == null ? null : env.trim();
-	}
+    public String getVersion() {
+        return version;
+    }
 
-	public String getType() {
-		return type;
-	}
+    public void setVersion(String version) {
+        this.version = version == null ? null : version.trim();
+    }
 
-	public void setType(String type) {
-		this.type = type == null ? null : type.trim();
-	}
+    public String getDownloadUrl() {
+        return downloadUrl;
+    }
 
-	public String getVersion() {
-		return version;
-	}
+    public void setDownloadUrl(String downloadUrl) {
+        this.downloadUrl = downloadUrl == null ? null : downloadUrl.trim();
+    }
 
-	public void setVersion(String version) {
-		this.version = version == null ? null : version.trim();
-	}
+    public Date getUploadTime() {
+        return uploadTime;
+    }
 
-	public String getDownloadUrl() {
-		return downloadUrl;
-	}
+    public void setUploadTime(Date uploadTime) {
+        this.uploadTime = uploadTime;
+    }
 
-	public void setDownloadUrl(String downloadUrl) {
-		this.downloadUrl = downloadUrl == null ? null : downloadUrl.trim();
-	}
+    public String getRemark() {
+        return remark;
+    }
 
-	public Date getUploadTime() {
-		return uploadTime;
-	}
+    public void setRemark(String remark) {
+        this.remark = remark == null ? null : remark.trim();
+    }
 
-	public void setUploadTime(Date uploadTime) {
-		this.uploadTime = uploadTime;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getRemark() {
-		return remark;
-	}
+    public void setName(String name) {
+        this.name = name == null ? null : name.trim();
+    }
 
-	public void setRemark(String remark) {
-		this.remark = remark == null ? null : remark.trim();
-	}
+    public String getAutotest() {
+        return autotest;
+    }
+
+    public void setAutotest(String autotest) {
+        this.autotest = autotest == null ? null : autotest.trim();
+    }
+
+    public String getAppName() {
+        return appName;
+    }
+
+    public void setAppName(String appName) {
+        this.appName = appName == null ? null : appName.trim();
+    }
 }

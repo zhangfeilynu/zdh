@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.htf.zdh.jdbc.dao.HtfLinkInfoMapper;
-import com.htf.zdh.jdbc.po.AppInfoList;
 import com.htf.zdh.jdbc.po.HtfLinkInfo;
 import com.htf.zdh.service.bo.HtfLinkInfoBo;
 import com.htf.zdh.utils.DateUtils;

@@ -35,7 +35,7 @@ public class IOSUtil {
 
 	}
 
-	public static void createPlist(String path, String fileName, String bundleId, String url) {
+	public static void createPlist(String path, String fileName, String bundleId, String appName, String url) {
 		logger.info("==========开始创建plist文件");
 		String plistFile = fileName + ".plist";
 		String plistPath = path + plistFile;
@@ -57,7 +57,7 @@ public class IOSUtil {
 				+ "<key>bundle-identifier</key>\n"
 				// 参数bundle-identifier是开发者账号用户名，可以为空或任意，区别在于安装的过程中有无图标和进度，参数的值在下面一行设置
 				+ "<string>" + bundleId + "</string>\n" + "<key>kind</key>\n" + "<string>software</string>\n"
-				+ "<key>title</key>\n" + "<string>现金宝</string>\n" + "</dict>\n" + "</dict>\n" + "</array>\n"
+				+ "<key>title</key>\n" + "<string>" + appName + "</string>\n" + "</dict>\n" + "</dict>\n" + "</array>\n"
 				+ "</dict>\n" + "</plist>";
 		FileOutputStream output = null;
 		OutputStreamWriter writer = null;
