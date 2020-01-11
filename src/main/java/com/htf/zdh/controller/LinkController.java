@@ -58,8 +58,8 @@ public class LinkController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "id", value = "id", required = false, paramType = "form", dataType = "int"),
 			@ApiImplicitParam(name = "functionType", value = "分组", required = false, paramType = "form", dataType = "string"),
-			@ApiImplicitParam(name = "functionName", value = "名称", required = true, paramType = "form", dataType = "string"),
-			@ApiImplicitParam(name = "linkDetails", value = "详情", required = true, paramType = "form", dataType = "string"),
+			@ApiImplicitParam(name = "functionName", value = "链接名称", required = true, paramType = "form", dataType = "string"),
+			@ApiImplicitParam(name = "linkDetails", value = "链接地址", required = true, paramType = "form", dataType = "string"),
 			@ApiImplicitParam(name = "remark", value = "备注", required = false, paramType = "form", dataType = "string") })
 	@RequestMapping(value = "/insert", method = { RequestMethod.POST })
 	@ResponseBody
