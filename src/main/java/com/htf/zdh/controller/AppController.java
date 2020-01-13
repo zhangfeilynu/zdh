@@ -41,7 +41,7 @@ public class AppController {
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "env", value = "测试环境，默认UAT", required = false, paramType = "form", dataType = "string"),
 			@ApiImplicitParam(name = "version", value = "app版本号，例如5.50", required = true, paramType = "form", dataType = "string"),
-			@ApiImplicitParam(name = "appName", value = "app名称，现金宝、汇添富小i，默认现金宝", required = false, paramType = "form", dataType = "string"),
+			@ApiImplicitParam(name = "appName", value = "app名称，现金宝、汇富小i，默认现金宝", required = false, paramType = "form", dataType = "string"),
 			@ApiImplicitParam(name = "remark", value = "备注", required = false, paramType = "form", dataType = "string"),
 			@ApiImplicitParam(name = "autotest", value = "0非自动化测试包，1自动化测试包，默认0", required = false, paramType = "form", dataType = "string"),
 			@ApiImplicitParam(name = "file", value = "文件", required = true, paramType = "form", dataType = "file") })
@@ -65,7 +65,7 @@ public class AppController {
 	@ApiOperation(value = "查询APP", notes = "查询APP")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "env", value = "测试环境，例如UAT、SIT", required = false, paramType = "query", dataType = "string"),
-			@ApiImplicitParam(name = "appName", value = "app名称，现金宝或者汇添富小i", required = false, paramType = "query", dataType = "string"),
+			@ApiImplicitParam(name = "appName", value = "app名称，现金宝或者汇富小i", required = false, paramType = "query", dataType = "string"),
 			@ApiImplicitParam(name = "type", value = "app类型，android或者ios", required = false, paramType = "query", dataType = "string"),
 			@ApiImplicitParam(name = "version", value = "app版本号，例如5.50", required = false, paramType = "query", dataType = "string"),
 			@ApiImplicitParam(name = "autotest", value = "0非自动化测试包，1自动化测试包，默认0", required = false, paramType = "query", dataType = "string"),

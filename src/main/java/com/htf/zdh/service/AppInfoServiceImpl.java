@@ -150,7 +150,7 @@ public class AppInfoServiceImpl implements AppInfoService {
 
 		if ("dev".equals(env)) {
 
-			if ("汇添富小i".equals(appInfo.getAppName())) {
+			if ("汇富小i".equals(appInfo.getAppName())) {
 				filePath = basePath + "\\" + "\\i\\" + appInfo.getEnv() + "\\" + type + "\\" + appInfo.getVersion()
 						+ "\\";
 			} else {
@@ -159,7 +159,7 @@ public class AppInfoServiceImpl implements AppInfoService {
 
 		} else {
 
-			if ("汇添富小i".equals(appInfo.getAppName())) {
+			if ("汇富小i".equals(appInfo.getAppName())) {
 				filePath = basePath + "/i/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/";
 			} else {
 				filePath = basePath + "/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/";
@@ -197,7 +197,7 @@ public class AppInfoServiceImpl implements AppInfoService {
 			 */
 			String downloadUrl = "";
 
-			if ("汇添富小i".equals(appInfo.getAppName())) {
+			if ("汇富小i".equals(appInfo.getAppName())) {
 				downloadUrl = baseDownloadUrl + "/i/" + appInfo.getEnv() + "/" + type + "/" + appInfo.getVersion() + "/"
 						+ md5Filename;
 			} else {
@@ -220,7 +220,7 @@ public class AppInfoServiceImpl implements AppInfoService {
 			if ("ios".equals(type)) {
 				String bundleId = "";
 				String plistUrl = "";
-				if ("汇添富小i".equals(appInfo.getAppName())) {
+				if ("汇富小i".equals(appInfo.getAppName())) {
 					bundleId = "com.HTF.HTFIMobilePortal";
 					plistUrl = "https://10.50.16.230" + "/i/" + appInfo.getEnv() + "/" + type + "/"
 							+ appInfo.getVersion() + "/" + md5Pre + ".plist";

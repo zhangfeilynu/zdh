@@ -26,7 +26,7 @@ public class IOSUtil {
 		// "http://10.50.16.230/sit/ios/5.5/HTF_5.50_201909041100.ipa");
 		// createHtml(path, "xxxx", "sss");
 		// encryption("sgshhg\\\\\\///// ****%%%%$$$$ 飒飒看");
-		String str = "5.20";
+		String str = "1.12.0";
 		if (testNum(str)) {
 			logger.info("正确");
 		} else {
@@ -178,7 +178,7 @@ public class IOSUtil {
 	}
 
 	public static boolean testNum(String str) {// 判断是正数，含小数
-		String regEx = "^\\d+(\\.\\d+)?$"; //
+		String regEx = "^\\d+(\\.\\d+)?$";
 		Pattern p = Pattern.compile(regEx);
 		Matcher m = p.matcher(str);
 		boolean result = m.find();
