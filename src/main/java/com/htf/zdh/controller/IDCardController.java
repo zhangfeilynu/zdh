@@ -23,10 +23,10 @@ public class IDCardController {
 	@Autowired
 	private IdCardService idCardService;
 
-	@ApiOperation(value = "查询APP", notes = "查询APP")
+	@ApiOperation(value = "生成随机身份证号码", notes = "生成随机身份证号码，可选参数区域代码:areaCode、出生年份：birth")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "areaCode", value = "区域代码，6位数字，例如411521", required = false, paramType = "query", dataType = "int"),
-			@ApiImplicitParam(name = "birth", value = "出生年份", required = false, paramType = "query", dataType = "string") })
+			@ApiImplicitParam(name = "birth", value = "出生年份，格式1998", required = false, paramType = "query", dataType = "string") })
 	@RequestMapping(value = "/randomIdNo", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
 	public Map<String, String> getIDCard(@RequestParam(value = "areaCode", required = false) Integer areaCode,
