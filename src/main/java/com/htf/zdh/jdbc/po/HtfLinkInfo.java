@@ -11,7 +11,7 @@ public class HtfLinkInfo {
 
 	private String linkDetails;
 
-	private String linkStatus;
+	private Integer linkStatus;
 
 	private String remark;
 
@@ -55,12 +55,12 @@ public class HtfLinkInfo {
 		this.linkDetails = linkDetails == null ? null : linkDetails.trim();
 	}
 
-	public String getLinkStatus() {
+	public Integer getLinkStatus() {
 		return linkStatus;
 	}
 
-	public void setLinkStatus(String linkStatus) {
-		this.linkStatus = linkStatus == null ? null : linkStatus.trim();
+	public void setLinkStatus(Integer linkStatus) {
+		this.linkStatus = linkStatus;
 	}
 
 	public String getCreatedBy() {

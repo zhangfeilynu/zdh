@@ -6,7 +6,7 @@
     <result column="function_type" jdbcType="VARCHAR" property="functionType" />
     <result column="function_name" jdbcType="VARCHAR" property="functionName" />
     <result column="link_details" jdbcType="VARCHAR" property="linkDetails" />
-    <result column="link_status" jdbcType="CHAR" property="linkStatus" />
+    <result column="link_status" jdbcType="INTEGER" property="linkStatus" />
     <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="created_by" jdbcType="VARCHAR" property="createdBy" />
     <result column="updated_by" jdbcType="VARCHAR" property="updatedBy" />
@@ -21,13 +21,15 @@
     select 
     <include refid="Base_Column_List" />
     from htf_link_info
-    where id = #{id,jdbcType=INTEGER}
+    where link_status=0
+    and id = #{id,jdbcType=INTEGER}
   </select>
   
   <select id="selectAll"  resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from htf_link_info
+    where link_status=0
     order by function_type
   </select>
   
@@ -41,7 +43,7 @@
       created_by, updated_by, created_date, 
       updated_date)
     values (#{id,jdbcType=INTEGER}, #{functionType,jdbcType=VARCHAR}, #{functionName,jdbcType=VARCHAR}, 
-      #{linkDetails,jdbcType=VARCHAR}, #{linkStatus,jdbcType=CHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{linkDetails,jdbcType=VARCHAR}, #{linkStatus,jdbcType=INTEGER}, #{remark,jdbcType=VARCHAR}, 
       #{createdBy,jdbcType=VARCHAR}, #{updatedBy,jdbcType=VARCHAR}, #{createdDate,jdbcType=VARCHAR}, 
       #{updatedDate,jdbcType=TIMESTAMP})
   </insert>
@@ -93,7 +95,7 @@
         #{linkDetails,jdbcType=VARCHAR},
       </if>
       <if test="linkStatus != null">
-        #{linkStatus,jdbcType=CHAR},
+        #{linkStatus,jdbcType=INTEGER},
       </if>
       <if test="remark != null">
         #{remark,jdbcType=VARCHAR},
@@ -125,7 +127,7 @@
         link_details = #{linkDetails,jdbcType=VARCHAR},
       </if>
       <if test="linkStatus != null">
-        link_status = #{linkStatus,jdbcType=CHAR},
+        link_status = #{linkStatus,jdbcType=INTEGER},
       </if>
       <if test="remark != null">
         remark = #{remark,jdbcType=VARCHAR},
@@ -150,7 +152,7 @@
     set function_type = #{functionType,jdbcType=VARCHAR},
       function_name = #{functionName,jdbcType=VARCHAR},
       link_details = #{linkDetails,jdbcType=VARCHAR},
-      link_status = #{linkStatus,jdbcType=CHAR},
+      link_status = #{linkStatus,jdbcType=INTEGER},
       remark = #{remark,jdbcType=VARCHAR},
       created_by = #{createdBy,jdbcType=VARCHAR},
       updated_by = #{updatedBy,jdbcType=VARCHAR},
