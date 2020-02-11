@@ -56,6 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				// 登录接口放行
 				.antMatchers("/auth/login").permitAll()
+				// 放行swagger
+				.antMatchers(HttpMethod.GET, "/v2/api-docs", "/swagger-resources", "/swagger-resources/**",
+						"/configuration/ui", "/configuration/security", "/swagger-ui.html/**", "/webjars/**")
+				.permitAll()
 				// 其他接口全部接受验证
 				.anyRequest().authenticated();
 

@@ -2,7 +2,11 @@ package com.htf.zdh.utils;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +25,8 @@ import java.util.Map;
 public class JwtTokenUtil implements Serializable {
 
 	private static final long serialVersionUID = 8746425713376697286L;
+
+	private static final Logger logger = LoggerFactory.getLogger(JwtTokenUtil.class);
 
 	private static final String CLAIM_KEY_USERNAME = "sub";
 
@@ -65,8 +71,14 @@ public class JwtTokenUtil implements Serializable {
 	 * 根据token获取username
 	 */
 	public String getUsernameFromToken(String token) {
-		String username = getClaimsFromToken(token).getSubject();
-		return username;
+
+		if (getClaimsFromToken(token) == null) {
+			return null;
+		} else {
+			String username = getClaimsFromToken(token).getSubject();
+			return username;
+		}
+
 	}
 
 	/**
@@ -81,8 +93,14 @@ public class JwtTokenUtil implements Serializable {
 	 * 解析JWT
 	 */
 	private Claims getClaimsFromToken(String token) {
-		Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
-		return claims;
+		try {
+			Claims claims = Jwts.parser().setSigningKey(SECRET).parseClaimsJws(token).getBody();
+			return claims;
+		} catch (MalformedJwtException e) {
+			logger.error("token验证失败：" + e.getMessage());
+		}
+
+		return null;
 	}
 
 }
