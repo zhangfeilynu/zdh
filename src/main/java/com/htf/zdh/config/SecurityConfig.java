@@ -1,6 +1,9 @@
 package com.htf.zdh.config;
 
 import com.htf.zdh.filter.JwtTokenFilter;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,6 +22,7 @@ import org.springframework.util.DigestUtils;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -31,7 +35,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			// 对密码进行加密
 			@Override
 			public String encode(CharSequence charSequence) {
-				System.out.println(charSequence.toString());
+				logger.info(charSequence.toString());
 				return DigestUtils.md5DigestAsHex(charSequence.toString().getBytes());
 			}
 
