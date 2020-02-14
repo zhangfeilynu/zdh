@@ -22,6 +22,7 @@ public class RestAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
 			AccessDeniedException accessDeniedException) throws IOException, ServletException {
+		response.setHeader("Access-Control-Allow-Origin", "*");
 
 		response.setContentType("application/json;charset=UTF-8");
 		response.getWriter().write("{\"code\":403,\"message\":\"权限不足\",\"data\":null}");

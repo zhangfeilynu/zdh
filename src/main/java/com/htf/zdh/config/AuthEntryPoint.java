@@ -25,6 +25,7 @@ public class AuthEntryPoint implements AuthenticationEntryPoint {
 	@Override
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
+		response.setHeader("Access-Control-Allow-Origin", "*");
 
 		response.setContentType("application/json;charset=UTF-8");
 

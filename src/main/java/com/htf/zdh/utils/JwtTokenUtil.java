@@ -1,6 +1,7 @@
 package com.htf.zdh.utils;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -31,9 +32,9 @@ public class JwtTokenUtil implements Serializable {
 	private static final String CLAIM_KEY_USERNAME = "sub";
 
 	/**
-	 * 5天(毫秒)
+	 * 24h(毫秒)
 	 */
-	private static final long EXPIRATION_TIME = 432000000;
+	private static final long EXPIRATION_TIME = 86400000;
 	/**
 	 * JWT密码
 	 */
@@ -98,6 +99,8 @@ public class JwtTokenUtil implements Serializable {
 			return claims;
 		} catch (MalformedJwtException e) {
 			logger.error("token验证失败：" + e.getMessage());
+		} catch (ExpiredJwtException e) {
+			logger.error("token过期：" + e.getMessage());
 		}
 
 		return null;
