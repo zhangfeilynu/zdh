@@ -28,6 +28,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private UserDetailsService userDetailsService;
 
 	@Autowired
+	private AuthEntryPoint authEntryPoint; // 未登录异常处理器
+
+	@Autowired
+	private RestAccessDeniedHandler restAccessDeniedHandler;// 权限认证异常处理器
+
+	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
 		// 校验用户
@@ -71,6 +77,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// 使用自定义的 Token过滤器 验证请求的Token是否合法
 		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+		// 自定义401、403
+		http.exceptionHandling().authenticationEntryPoint(authEntryPoint).accessDeniedHandler(restAccessDeniedHandler);
 		// 禁用缓存
 		http.headers().cacheControl();
 
