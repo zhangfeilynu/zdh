@@ -58,6 +58,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				// OPTIONS请求全部放行
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+				// 生成二维码接口放行
+				.antMatchers("/app/qrcode").permitAll()
 				// 登录接口放行
 				.antMatchers("/auth/login").permitAll()
 				// 放行swagger
@@ -69,7 +71,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 		// 使用自定义的 Token过滤器 验证请求的Token是否合法
 		http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+		// 禁用缓存
 		http.headers().cacheControl();
+
 	}
 
 	@Bean
