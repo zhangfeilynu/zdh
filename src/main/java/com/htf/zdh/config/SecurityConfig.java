@@ -2,6 +2,7 @@ package com.htf.zdh.config;
 
 import com.htf.zdh.common.Const;
 import com.htf.zdh.filter.JwtTokenFilter;
+import com.htf.zdh.service.CommonService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +25,9 @@ import org.springframework.util.DigestUtils;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	private static final Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
+
+	@Autowired
+	private CommonService commonService;
 
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -66,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// OPTIONS请求全部放行
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				// 生成二维码接口登录接口等放行
-				.antMatchers(Const.INTERCEPTPATH).permitAll()
+				.antMatchers(commonService.selectPaths()).permitAll()
 				// 放行swagger
 				.antMatchers(HttpMethod.GET, "/v2/api-docs", "/swagger-resources", "/swagger-resources/**",
 						"/configuration/ui", "/configuration/security", "/swagger-ui.html/**", "/webjars/**")
