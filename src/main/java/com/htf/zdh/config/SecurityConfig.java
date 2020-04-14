@@ -1,5 +1,6 @@
 package com.htf.zdh.config;
 
+import com.htf.zdh.common.Const;
 import com.htf.zdh.filter.JwtTokenFilter;
 
 import org.slf4j.Logger;
@@ -64,10 +65,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				// OPTIONS请求全部放行
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				// 生成二维码接口放行
-				.antMatchers("/app/qrcode").permitAll()
-				// 登录接口放行
-				.antMatchers("/auth/login").permitAll()
+				// 生成二维码接口登录接口等放行
+				.antMatchers(Const.INTERCEPTPATH).permitAll()
 				// 放行swagger
 				.antMatchers(HttpMethod.GET, "/v2/api-docs", "/swagger-resources", "/swagger-resources/**",
 						"/configuration/ui", "/configuration/security", "/swagger-ui.html/**", "/webjars/**")
