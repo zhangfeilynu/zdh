@@ -59,4 +59,20 @@ public class UopController {
 		return map;
 	}
 
+	@ApiOperation(value = "单笔管理", notes = "单笔管理-发送预约码给用户手机")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "custNm", value = "用户姓名", required = false, paramType = "query", dataType = "string"),
+			@ApiImplicitParam(name = "fundId", value = "产品ID", required = false, paramType = "query", dataType = "string"),
+			@ApiImplicitParam(name = "mobileNo", value = "手机号", required = false, paramType = "query", dataType = "string"),
+			@ApiImplicitParam(name = "realAmt", value = "金额，单位：百万元", required = false, paramType = "query", dataType = "string") })
+	@RequestMapping(value = "/v1/reserve-code/add", method = { RequestMethod.POST })
+	@ResponseBody
+	public Map<String, Integer> add(@RequestParam String custNm, @RequestParam String fundId,
+			@RequestParam String mobileNo, @RequestParam String realAmt) {
+		int i = Vip.add(custNm, fundId, mobileNo, realAmt);
+		Map<String, Integer> map = new HashMap<>();
+		map.put("code", i);
+		return map;
+	}
+
 }

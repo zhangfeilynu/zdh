@@ -69,7 +69,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
 				// OPTIONS请求全部放行
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				// 生成二维码接口登录接口等放行
+				// 放行的接口，数据里配置的
 				.antMatchers(commonService.selectPaths()).permitAll()
 				// 放行swagger
 				.antMatchers(HttpMethod.GET, "/v2/api-docs", "/swagger-resources", "/swagger-resources/**",

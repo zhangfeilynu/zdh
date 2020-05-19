@@ -135,4 +135,46 @@ public class Vip {
 		return -1;
 	}
 
+	public static int add(String custNm, String fundId, String mobileNo, String realAmt) {// 流水号管理-单笔管理-发送预约码给用户手机
+
+		String deadlineDate = DateUtils.getDateNext();
+		String nextOpenDate = DateUtils.getDateStr1();
+
+		String url = "http://10.50.16.242:8099/vip/v1/reserve-code/add";
+		Map<String, String> param = new HashMap<>();
+		param.put("deadlineDate", deadlineDate);
+		param.put("nextOpenDate", nextOpenDate);
+		param.put("custNm", custNm);
+		param.put("fundId", fundId);
+		param.put("mobileNo", mobileNo);
+		param.put("realAmt", realAmt);
+		param.put("accptMd", "M");
+		Gson gson = new Gson();
+		String json = gson.toJson(param);
+		json = "[" + json + "]";
+		MediaType type = MediaType.parse("application/json;charset=utf-8");
+		OkHttpClient httpClient = new OkHttpClient();
+		@SuppressWarnings("deprecation")
+		RequestBody requestBody = RequestBody.create(type, json);
+		Request request = new Request.Builder().post(requestBody).url(url).build();
+		Response response = null;
+		try {
+			response = httpClient.newCall(request).execute();
+			String responseStr = response.body().string();
+			logger.info("/vip/v1/reserve-code/add返回结果:" + responseStr);
+			JsonPath jsonPath = new JsonPath(responseStr);
+			int i = -1;
+			i = jsonPath.getInt("returnCode");
+			return i;
+		} catch (IOException e) {
+			logger.error("/vip/v1/reserve-code/add请求异常，" + e.getMessage());
+		} finally {
+			if (response != null) {
+				response.close();
+			}
+		}
+
+		return -1;
+	}
+
 }
