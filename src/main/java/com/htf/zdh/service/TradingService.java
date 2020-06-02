@@ -4,4 +4,6 @@ public interface TradingService {
 
 	public String getTradingDay(int tag);
 
+	public int isTradingDay();
+
 }

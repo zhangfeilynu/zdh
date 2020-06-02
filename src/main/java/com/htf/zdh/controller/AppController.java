@@ -139,4 +139,13 @@ public class AppController {
 
 	}
 
+	@ApiOperation(value = "判断当天是否交易日", notes = "判断当天是否交易日,1是交易日，0非交易日")
+	@RequestMapping(value = "/isTradingDay", method = { RequestMethod.GET })
+	@ResponseBody
+	public int isTradingDay() {
+
+		return tradingService.isTradingDay();
+
+	}
+
 }

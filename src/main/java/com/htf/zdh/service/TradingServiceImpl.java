@@ -70,4 +70,9 @@ public class TradingServiceImpl implements TradingService {
 		return result;
 	}
 
+	@Override
+	public int isTradingDay() {
+		return tradingDayMapper.getFlag();
+	}
+
 }

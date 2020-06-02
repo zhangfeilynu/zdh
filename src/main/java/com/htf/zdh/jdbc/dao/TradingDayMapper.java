@@ -18,4 +18,5 @@ public interface TradingDayMapper {
 	int updateByPrimaryKeySelective(TradingDay record);
 
 	int updateByPrimaryKey(TradingDay record);
+
 }
