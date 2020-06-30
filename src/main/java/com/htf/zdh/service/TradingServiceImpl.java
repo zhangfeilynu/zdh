@@ -72,6 +72,7 @@ public class TradingServiceImpl implements TradingService {
 
 	@Override
 	public int isTradingDay() {
+		logger.info("测试jacoco增量覆盖");
 		return tradingDayMapper.getFlag();
 	}
 
