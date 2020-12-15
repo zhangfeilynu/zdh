@@ -2,7 +2,7 @@
 <configuration>
 
     <property name="server_name" value="zdh" />
-    <property name="log_dir" value="E:/workspace/zdh/logs" />
+    <property name="log_dir" value="D:/workspace/zdh/logs" />
     <property name="maxFileSize" value="50MB" />
     <property name="maxHistory" value="180" />
 

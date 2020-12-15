@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletResponse;
 
+import com.htf.zdh.service.ApiVisitService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -36,6 +37,9 @@ public class AppController {
 
 	@Autowired
 	private TradingService tradingService;
+
+	@Autowired
+	private ApiVisitService apiVisitService;
 
 	@ApiOperation(value = "上传APP", notes = "上传APP到服务器")
 	@ApiImplicitParams({
@@ -117,6 +121,8 @@ public class AppController {
 	@RequestMapping(value = "/qrcode", method = { RequestMethod.GET })
 	@ResponseBody
 	public void getQrCode(@RequestParam String url, HttpServletResponse response) {
+
+		apiVisitService.insert("getQrCode");//下载打点
 		QrCodeUtil qrCodeUtil = new QrCodeUtil();
 		BufferedImage image = qrCodeUtil.createQrCode(url);
 		response.setHeader("Content-Type", "image/jpeg");
@@ -126,6 +132,8 @@ public class AppController {
 		} catch (IOException e) {
 			logger.error("二维码写入输出流失败：" + e.getMessage());
 		}
+
+
 
 	}
 
