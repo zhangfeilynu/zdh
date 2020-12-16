@@ -122,7 +122,7 @@ public class AppController {
 	@ResponseBody
 	public void getQrCode(@RequestParam String url, HttpServletResponse response) {
 
-		apiVisitService.insert("getQrCode");//下载打点
+
 		QrCodeUtil qrCodeUtil = new QrCodeUtil();
 		BufferedImage image = qrCodeUtil.createQrCode(url);
 		response.setHeader("Content-Type", "image/jpeg");
@@ -132,6 +132,7 @@ public class AppController {
 		} catch (IOException e) {
 			logger.error("二维码写入输出流失败：" + e.getMessage());
 		}
+		apiVisitService.insert("getQrCode");//下载打点
 
 
 
