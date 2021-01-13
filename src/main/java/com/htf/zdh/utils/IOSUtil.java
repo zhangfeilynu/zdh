@@ -20,18 +20,18 @@ public class IOSUtil {
 	private static final Logger logger = LoggerFactory.getLogger(IOSUtil.class);
 
 	public static void main(String[] args) {
-		// String path = "F:\\htf\\upload\\";
+		 String path = "E:\\htf\\upload\\";
 
-		// createPlist(path, "xxxy", "com.htf.mclient.Uat35",
-		// "http://10.50.16.230/sit/ios/5.5/HTF_5.50_201909041100.ipa");
-		// createHtml(path, "xxxx", "sss");
+		 createPlist(path, "xxxy", "com.htf.mclient.Uat35","现金宝",
+		 "http://10.50.16.230/sit/ios/5.5/HTF_5.50_201909041100.ipa");
+		 createHtml(path, "xxxx", "sss");
 		// encryption("sgshhg\\\\\\///// ****%%%%$$$$ 飒飒看");
-		String str = "1.12.0";
-		if (testNum(str)) {
-			logger.info("正确");
-		} else {
-			logger.info("错误");
-		}
+//		String str = "1.12.0";
+//		if (testNum(str)) {
+//			logger.info("正确");
+//		} else {
+//			logger.info("错误");
+//		}
 
 	}
 
@@ -47,13 +47,29 @@ public class IOSUtil {
 				e.printStackTrace();
 			}
 		}
+//		String plist = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
+//				+ "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
+//				+ "<plist version=\"1.0\">\n" + "<dict>\n" + "<key>items</key>\n" + "<array>\n" + "<dict>\n"
+//				+ "<key>assets</key>\n" + "<array>\n" + "<dict>\n" + "<key>kind</key>\n"
+//				+ "<string>software-package</string>\n" + "<key>url</key>\n"
+//				// 参数url配置ipa文件的下载路径，参数的值在下面一行设置
+//				+ "<string>" + url + "</string>\n" + "</dict>\n" + "</array>\n" + "<key>metadata</key>\n" + "<dict>\n"
+//				+ "<key>bundle-identifier</key>\n"
+//				// 参数bundle-identifier是开发者账号用户名，可以为空或任意，区别在于安装的过程中有无图标和进度，参数的值在下面一行设置
+//				+ "<string>" + bundleId + "</string>\n" + "<key>kind</key>\n" + "<string>software</string>\n"
+//				+ "<key>title</key>\n" + "<string>" + appName + "</string>\n" + "</dict>\n" + "</dict>\n" + "</array>\n"
+//				+ "</dict>\n" + "</plist>";
+
 		String plist = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n"
 				+ "<!DOCTYPE plist PUBLIC \"-//Apple//DTD PLIST 1.0//EN\" \"http://www.apple.com/DTDs/PropertyList-1.0.dtd\">\n"
 				+ "<plist version=\"1.0\">\n" + "<dict>\n" + "<key>items</key>\n" + "<array>\n" + "<dict>\n"
 				+ "<key>assets</key>\n" + "<array>\n" + "<dict>\n" + "<key>kind</key>\n"
 				+ "<string>software-package</string>\n" + "<key>url</key>\n"
 				// 参数url配置ipa文件的下载路径，参数的值在下面一行设置
-				+ "<string>" + url + "</string>\n" + "</dict>\n" + "</array>\n" + "<key>metadata</key>\n" + "<dict>\n"
+				+ "<string>" + url + "</string>\n" + "</dict>\n" +
+				"<dict>\n"+"<key>kind</key>\n"+"<string>display-image</string>\n"+"<key>url</key>\n"+"<string>http://10.50.16.230/57.png</string>\n"+"<dict>\n"+
+				"<dict>\n"+"<key>kind</key>\n"+"<string>full-size-image</string>\n"+"<key>url</key>\n"+"<string>http://10.50.16.230/512.png</string>\n"+"<dict>\n"+
+				"</array>\n" + "<key>metadata</key>\n" + "<dict>\n"
 				+ "<key>bundle-identifier</key>\n"
 				// 参数bundle-identifier是开发者账号用户名，可以为空或任意，区别在于安装的过程中有无图标和进度，参数的值在下面一行设置
 				+ "<string>" + bundleId + "</string>\n" + "<key>kind</key>\n" + "<string>software</string>\n"

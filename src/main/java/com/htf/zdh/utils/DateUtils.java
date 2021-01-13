@@ -29,7 +29,7 @@ public class DateUtils {
 		// String s = "2019-10-15";
 
 		// String[] sArray = s.split("-");
-		System.out.println(getYMDHMSStd());
+		System.out.println(getDateStr4("2021-01-08"));
 
 	}
 
@@ -95,6 +95,24 @@ public class DateUtils {
 		if ("0".equals(sArray[2].substring(0, 1))) {
 			sArray[2] = sArray[2].substring(1);
 		}
+
+		return sArray[1] + "月" + sArray[2] + "日";
+
+	}
+
+	// 截取日期2020-01-08，转变为01月08日
+	public static String getDateStr4(String dateStr) {
+		String[] sArray = dateStr.split("-");
+		if (sArray.length != 3)
+			return null;
+
+//		if ("0".equals(sArray[1].substring(0, 1))) {// 01-09去掉第一个0
+//			sArray[1] = sArray[1].substring(1);
+//		}
+
+//		if ("0".equals(sArray[2].substring(0, 1))) {
+//			sArray[2] = sArray[2].substring(1);
+//		}
 
 		return sArray[1] + "月" + sArray[2] + "日";
 

@@ -148,6 +148,16 @@ public class AppController {
 
 	}
 
+	@ApiOperation(value = "app6.30版本获取交易日", notes = "app6.30版本获取交易日")
+	@ApiImplicitParam(name = "tag", value = "0：T+0,1：T+1,2：T+2", required = true, paramType = "query", dataType = "int")
+	@RequestMapping(value = "/trading2", method = { RequestMethod.GET })
+	@ResponseBody
+	public String getTrDay2(@RequestParam int tag) {
+
+		return tradingService.getTradingDay2(tag);
+
+	}
+
 	@ApiOperation(value = "判断当天是否交易日", notes = "判断当天是否交易日,1是交易日，0非交易日")
 	@RequestMapping(value = "/isTradingDay", method = { RequestMethod.GET })
 	@ResponseBody
