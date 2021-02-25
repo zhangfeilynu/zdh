@@ -24,11 +24,13 @@ public class UtilController {
 	@ApiOperation(value = "保留几位小数", notes = "保留几位小数")
 	@ApiImplicitParams({
 			@ApiImplicitParam(name = "num", value = "原数字", required = true, paramType = "query", dataType = "double"),
-			@ApiImplicitParam(name = "digit", value = "小数点位数", required = true, paramType = "query", dataType = "integer") })
+			@ApiImplicitParam(name = "digit", value = "小数点位数", required = false, paramType = "query", dataType = "integer") })
 	@RequestMapping(value = "/formatDouble", method = {  RequestMethod.GET })
 	@ResponseBody
-	public String formatDouble(@RequestParam double num,@RequestParam Integer digit) {
-
+	public String formatDouble(@RequestParam double num,@RequestParam(required = false) Integer digit) {
+		if(digit==null){
+			digit=2;
+		}
 		return MathUtil.formatDouble(num,digit);
 
 	}
