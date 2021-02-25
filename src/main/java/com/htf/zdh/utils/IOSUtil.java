@@ -67,8 +67,8 @@ public class IOSUtil {
 				+ "<string>software-package</string>\n" + "<key>url</key>\n"
 				// 参数url配置ipa文件的下载路径，参数的值在下面一行设置
 				+ "<string>" + url + "</string>\n" + "</dict>\n" +
-				"<dict>\n"+"<key>kind</key>\n"+"<string>display-image</string>\n"+"<key>url</key>\n"+"<string>http://10.50.16.230/57.png</string>\n"+"<dict>\n"+
-				"<dict>\n"+"<key>kind</key>\n"+"<string>full-size-image</string>\n"+"<key>url</key>\n"+"<string>http://10.50.16.230/512.png</string>\n"+"<dict>\n"+
+				"<dict>\n"+"<key>kind</key>\n"+"<string>display-image</string>\n"+"<key>url</key>\n"+"<string>http://10.50.16.230/57.png</string>\n"+"</dict>\n"+
+				"<dict>\n"+"<key>kind</key>\n"+"<string>full-size-image</string>\n"+"<key>url</key>\n"+"<string>http://10.50.16.230/512.png</string>\n"+"</dict>\n"+
 				"</array>\n" + "<key>metadata</key>\n" + "<dict>\n"
 				+ "<key>bundle-identifier</key>\n"
 				// 参数bundle-identifier是开发者账号用户名，可以为空或任意，区别在于安装的过程中有无图标和进度，参数的值在下面一行设置

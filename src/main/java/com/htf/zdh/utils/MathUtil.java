@@ -7,12 +7,16 @@ public class MathUtil {
 		// double a = 9487.65;
 		// double b = 478712.55;
 		// System.out.println(a / b);
-		System.out.print(formatDoubleLeafN(9385.74, 43513.50));
+		System.out.print(formatDouble(10.666666,2));
 
 	}
 
 	public static String formatDoubleLeafFour(double d) {
 		return String.format("%.4f", d);
+	}
+
+	public static String formatDouble(double d,Integer digit) {//数d保留digit位小数
+		return String.format("%."+digit+"f", d);
 	}
 
 	public static String formatDoubleLeafN(double dividend, double divisor) {// dividend 被除数 divisor 除数

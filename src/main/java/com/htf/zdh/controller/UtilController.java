@@ -19,6 +19,20 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "util")
 public class UtilController {
 
+
+
+	@ApiOperation(value = "保留几位小数", notes = "保留几位小数")
+	@ApiImplicitParams({
+			@ApiImplicitParam(name = "num", value = "原数字", required = true, paramType = "query", dataType = "double"),
+			@ApiImplicitParam(name = "digit", value = "小数点位数", required = true, paramType = "query", dataType = "integer") })
+	@RequestMapping(value = "/formatDouble", method = {  RequestMethod.GET })
+	@ResponseBody
+	public String formatDouble(@RequestParam double num,@RequestParam Integer digit) {
+
+		return MathUtil.formatDouble(num,digit);
+
+	}
+
 	@ApiOperation(value = "四舍五入保留4位小数", notes = "四舍五入保留4位小数")
 	@ApiImplicitParam(name = "num", value = "小数", required = true, paramType = "query", dataType = "double")
 	@RequestMapping(value = "/formatDoubleLeafFour", method = { RequestMethod.GET })
