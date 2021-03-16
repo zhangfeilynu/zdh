@@ -166,11 +166,11 @@ public class AppInfoServiceImpl implements AppInfoService {
 			}
 		}
 
-		if (!("apk".equalsIgnoreCase(ext) || "ipa".equalsIgnoreCase(ext))) {
-			result.setCode(40004);
-			result.setMessage("上传失败，只能上传apk或者ipa文件");
-			return result;
-		}
+//		if (!("apk".equalsIgnoreCase(ext) || "ipa".equalsIgnoreCase(ext))) {
+//			result.setCode(40004);
+//			result.setMessage("上传失败，只能上传apk或者ipa文件");
+//			return result;
+//		}
 
 		File dir = new File(filePath);
 		if (!dir.exists()) {
