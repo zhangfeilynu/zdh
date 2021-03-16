@@ -52,7 +52,7 @@ public class IApi {
 		MediaType type = MediaType.parse("application/json;charset=utf-8");
 		OkHttpClient httpClient = new OkHttpClient();
 		@SuppressWarnings("deprecation")
-		RequestBody requestBody = RequestBody.create(type, json);
+		RequestBody requestBody = RequestBody.create(json, type);
 		Request request = new Request.Builder().post(requestBody).url(url).build();
 		Response response = null;
 		try {

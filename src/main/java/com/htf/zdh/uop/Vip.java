@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -35,8 +36,7 @@ public class Vip {
 		String json = gson.toJson(param);
 		MediaType type = MediaType.parse("application/json;charset=utf-8");
 		OkHttpClient httpClient = new OkHttpClient();
-		@SuppressWarnings("deprecation")
-		RequestBody requestBody = RequestBody.create(type, json);
+		RequestBody requestBody = RequestBody.create(json, type);
 		Request request = new Request.Builder().post(requestBody).url(url).build();
 		Response response = null;
 		String reserveNo = "";
@@ -75,7 +75,7 @@ public class Vip {
 		MediaType type = MediaType.parse("application/json;charset=utf-8");
 		OkHttpClient httpClient = new OkHttpClient();
 		@SuppressWarnings("deprecation")
-		RequestBody requestBody = RequestBody.create(type, json);
+		RequestBody requestBody = RequestBody.create(json, type);
 		Request request = new Request.Builder().put(requestBody).url(url).build();
 		Response response = null;
 		try {
@@ -113,7 +113,7 @@ public class Vip {
 		MediaType type = MediaType.parse("application/json;charset=utf-8");
 		OkHttpClient httpClient = new OkHttpClient();
 		@SuppressWarnings("deprecation")
-		RequestBody requestBody = RequestBody.create(type, json);
+		RequestBody requestBody = RequestBody.create(json, type);
 		Request request = new Request.Builder().put(requestBody).url(url).build();
 		Response response = null;
 		try {
@@ -155,7 +155,7 @@ public class Vip {
 		MediaType type = MediaType.parse("application/json;charset=utf-8");
 		OkHttpClient httpClient = new OkHttpClient();
 		@SuppressWarnings("deprecation")
-		RequestBody requestBody = RequestBody.create(type, json);
+		RequestBody requestBody = RequestBody.create(json, type);
 		Request request = new Request.Builder().post(requestBody).url(url).build();
 		Response response = null;
 		try {
