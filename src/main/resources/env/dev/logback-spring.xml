@@ -16,6 +16,7 @@
 
     <!-- info日志 appender  -->
     <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/info.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
             <fileNamePattern>${log_dir}/info-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
@@ -40,6 +41,7 @@
     
      <!-- warn日志 appender  -->
     <appender name="WARN" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/warn.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
             <fileNamePattern>${log_dir}/warn-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
@@ -64,6 +66,7 @@
 
     <!-- 出错日志 appender  -->
     <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${log_dir}/error.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <!-- 按天回滚 daily -->
             <fileNamePattern>${log_dir}/error-%d{yyyy-MM-dd}-%i.log</fileNamePattern>
