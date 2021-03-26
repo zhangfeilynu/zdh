@@ -1,0 +1,1 @@
+java -jar D:\workspace\zdh\target\zdh-0.0.1-SNAPSHOT.jar

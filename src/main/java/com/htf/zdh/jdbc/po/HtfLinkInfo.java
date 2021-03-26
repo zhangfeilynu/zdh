@@ -1,8 +1,10 @@
 package com.htf.zdh.jdbc.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class HtfLinkInfo {
+public class HtfLinkInfo implements Serializable {
+	private static final long serialVersionUID = -154894709084573226L;
 	private Integer id;
 
 	private String functionType;

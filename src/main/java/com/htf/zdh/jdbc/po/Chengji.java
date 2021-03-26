@@ -1,6 +1,9 @@
 package com.htf.zdh.jdbc.po;
 
-public class Chengji {
+import java.io.Serializable;
+
+public class Chengji implements Serializable {
+    private static final long serialVersionUID = 2283635765489529147L;
     private Byte id;
 
     private String name;

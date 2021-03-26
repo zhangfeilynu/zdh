@@ -1,8 +1,10 @@
 package com.htf.zdh.jdbc.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class ApiVisit {
+public class ApiVisit  implements Serializable {
+    private static final long serialVersionUID = 904269594616202860L;
     private Integer id;
 
     private Date createTime;

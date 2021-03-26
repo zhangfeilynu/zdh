@@ -1,6 +1,9 @@
 package com.htf.zdh.jdbc.po;
 
-public class Paths {
+import java.io.Serializable;
+
+public class Paths implements Serializable {
+    private static final long serialVersionUID = -7939816645847195177L;
     private Integer id;
 
     private String path;

@@ -1,8 +1,10 @@
 package com.htf.zdh.jdbc.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TradingDay {
+public class TradingDay implements Serializable {
+    private static final long serialVersionUID = 1643596225268437971L;
     private Integer id;
 
     private Date dateStr;

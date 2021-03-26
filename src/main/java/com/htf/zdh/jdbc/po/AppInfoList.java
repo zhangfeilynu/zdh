@@ -1,8 +1,10 @@
 package com.htf.zdh.jdbc.po;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AppInfoList {
+public class AppInfoList implements Serializable {
+    private static final long serialVersionUID = -6899153297504254540L;
     private Integer id;
 
     private String env;
