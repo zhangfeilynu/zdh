@@ -6,6 +6,8 @@ public interface TradingService {
 
 	public String getTradingDay2(int tag);
 
+	public String getCommonTradingDay(int tag);
+
 	public int isTradingDay();
 
 }

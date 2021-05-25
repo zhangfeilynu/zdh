@@ -39,35 +39,29 @@ public class TradingServiceImpl implements TradingService {
 
 			return result01;
 
-		}
-		String dateStr = "";
-		if (1 == tag) {// T+1基金
-			if (1 == flag && h < 15) {// 交易日15点前购买
-				logger.info("交易日15点前购买T1");
-				dateStr = tradingDayMapper.selectTradingDay(todayStr, 0);// 下一个交易日
-			} else {// 非交易日买，或者交易日15点之后买
-				logger.info("交易日15点后购买T1，或者非交易日购买T1");
-				dateStr = tradingDayMapper.selectTradingDay(todayStr, 1);// 下下个交易日
+		}else if(tag>=1){
+			String dateStr = "";
+			if (tag>=1) {// T+1基金
+				if (1 == flag && h < 15) {// 交易日15点前购买
+					logger.info("交易日15点前购买T1");
+					dateStr = tradingDayMapper.selectTradingDay(todayStr, tag-1);// 下一个交易日
+				} else {// 非交易日买，或者交易日15点之后买
+					logger.info("交易日15点后购买T1，或者非交易日购买T1");
+					dateStr = tradingDayMapper.selectTradingDay(todayStr, tag);// 下下个交易日
+				}
 			}
+			String date1 = "";// 购买页预计确认份额时间
+			date1 = DateUtils.getDateStr2(dateStr);
+			String date2 = "";// 交易明细页确认时间，格式为10-15
+			date2 = DateUtils.getDateStr3(dateStr);
+			String week = DateUtils.dateToWeek(dateStr);
+			String result = "";
+			result = "a预计将于" + date1 + "确认份额b，成功页c" + dateStr + "d日进行确认，明细页e预计" + date2 + " " + week + " " + "确认份额f明细买入时间"
+					+ todayStr;
+			return result;
+		}else{
+			return "参数错误";
 		}
-		if (2 == tag) {// T+2基金
-			if (1 == flag && h < 15) {// 交易日15点前购买
-				logger.info("交易日15点前购买T2");
-				dateStr = tradingDayMapper.selectTradingDay(todayStr, 1);// 下下个交易日
-			} else {// 非交易日买，或者交易日15点之后买
-				logger.info("交易日15点后购买T2，或者非交易日购买T2");
-				dateStr = tradingDayMapper.selectTradingDay(todayStr, 2);// 下下下个交易日
-			}
-		}
-		String date1 = "";// 购买页预计确认份额时间
-		date1 = DateUtils.getDateStr2(dateStr);
-		String date2 = "";// 交易明细页确认时间，格式为10-15
-		date2 = DateUtils.getDateStr3(dateStr);
-		String week = DateUtils.dateToWeek(dateStr);
-		String result = "";
-		result = "a预计将于" + date1 + "确认份额b，成功页c" + dateStr + "d日进行确认，明细页e预计" + date2 + " " + week + " " + "确认份额f明细买入时间"
-				+ todayStr;
-		return result;
 	}
 
 	@Override
@@ -93,35 +87,56 @@ public class TradingServiceImpl implements TradingService {
 
 			return result01;
 
+		}else if(tag>=1){
+			String dateStr = "";
+			if (tag>=1) {// T+1基金
+				if (1 == flag && h < 15) {// 交易日15点前购买
+					logger.info("交易日15点前购买T1");
+					dateStr = tradingDayMapper.selectTradingDay(todayStr, tag-1);// 下一个交易日
+				} else {// 非交易日买，或者交易日15点之后买
+					logger.info("交易日15点后购买T1，或者非交易日购买T1");
+					dateStr = tradingDayMapper.selectTradingDay(todayStr, tag);// 下下个交易日
+				}
+			}
+			String date1 = "";// 购买页预计确认份额时间
+			date1 = DateUtils.getDateStr4(dateStr);
+			String date2 = "";// 交易明细页确认时间，格式为10-15
+			date2 = DateUtils.getDateStr3(dateStr);
+			String week = DateUtils.dateToWeek(dateStr);
+			String result = "";
+			result = "a预计将于" + date1 + "确认份额b，成功页c" + dateStr + "d日进行确认，明细页e预计" + date2 + " " + week + " " + "确认份额f明细买入时间"
+					+ todayStr;
+			return result;
+		}else {
+			return "参数错误";
 		}
-		String dateStr = "";
-		if (1 == tag) {// T+1基金
+
+	}
+
+	@Override
+	public String getCommonTradingDay(int tag) {
+		String todayStr = DateUtils.getDateStr1();
+		int h = 0;
+		h = DateUtils.getHour();
+		int flag = 0;
+		flag = tradingDayMapper.getFlag();
+		logger.info(todayStr + "是否交易日：" + flag);
+		if (0 == tag) {// T+0基金
+			return todayStr.replaceAll("-",".");
+		}else if (tag>=1) {// T+1基金
+			String dateStr = "";
 			if (1 == flag && h < 15) {// 交易日15点前购买
 				logger.info("交易日15点前购买T1");
-				dateStr = tradingDayMapper.selectTradingDay(todayStr, 0);// 下一个交易日
+				dateStr = tradingDayMapper.selectTradingDay(todayStr, tag-1);// 下一个交易日
 			} else {// 非交易日买，或者交易日15点之后买
 				logger.info("交易日15点后购买T1，或者非交易日购买T1");
-				dateStr = tradingDayMapper.selectTradingDay(todayStr, 1);// 下下个交易日
+				dateStr = tradingDayMapper.selectTradingDay(todayStr, tag);// 下下个交易日
 			}
+			dateStr=dateStr.replaceAll("-",".");
+			return dateStr;
+		}else{
+			return "参数错误";
 		}
-		if (2 == tag) {// T+2基金
-			if (1 == flag && h < 15) {// 交易日15点前购买
-				logger.info("交易日15点前购买T2");
-				dateStr = tradingDayMapper.selectTradingDay(todayStr, 1);// 下下个交易日
-			} else {// 非交易日买，或者交易日15点之后买
-				logger.info("交易日15点后购买T2，或者非交易日购买T2");
-				dateStr = tradingDayMapper.selectTradingDay(todayStr, 2);// 下下下个交易日
-			}
-		}
-		String date1 = "";// 购买页预计确认份额时间
-		date1 = DateUtils.getDateStr4(dateStr);
-		String date2 = "";// 交易明细页确认时间，格式为10-15
-		date2 = DateUtils.getDateStr3(dateStr);
-		String week = DateUtils.dateToWeek(dateStr);
-		String result = "";
-		result = "a预计将于" + date1 + "确认份额b，成功页c" + dateStr + "d日进行确认，明细页e预计" + date2 + " " + week + " " + "确认份额f明细买入时间"
-				+ todayStr;
-		return result;
 	}
 
 	@Override
