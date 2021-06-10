@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  **/
 @Api(tags = "上传测试日报存入数据库")
 @RestController
-@RequestMapping("testReport")
+@RequestMapping("testDaily")
 public class TestDailyController {
     private static final Logger logger= LoggerFactory.getLogger(TestDailyController.class);
 
@@ -40,7 +40,7 @@ public class TestDailyController {
     @ApiOperation(value = "导入测试日报", notes = "导入测试日报")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "file", value = "文件", required = true, paramType = "form", dataType = "file") })
-    @RequestMapping(value="/itilupload",method= RequestMethod.POST)
+    @RequestMapping(value="/testDailyUpload",method= RequestMethod.POST)
     @ResponseBody
     public Results itilUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
        return testDailyService.uploadFile(file,request);
