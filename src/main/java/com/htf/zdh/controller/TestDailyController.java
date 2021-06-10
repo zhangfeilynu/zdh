@@ -37,7 +37,7 @@ public class TestDailyController {
      * @return
      */
 
-    @ApiOperation(value = "上传APP", notes = "上传APP到服务器")
+    @ApiOperation(value = "导入测试日报", notes = "导入测试日报")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "file", value = "文件", required = true, paramType = "form", dataType = "file") })
     @RequestMapping(value="/itilupload",method= RequestMethod.POST)
