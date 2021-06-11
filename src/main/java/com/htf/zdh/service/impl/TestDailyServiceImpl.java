@@ -50,6 +50,9 @@ public class TestDailyServiceImpl implements TestDailyService {
         if (!(file.getOriginalFilename().endsWith(EXCEL_XLS) || file.getOriginalFilename().endsWith(EXCEL_XLSX))) {
             throw new Exception("文件不是Excel");
         }
+
+
+
         InputStream in = file.getInputStream();
         Workbook workbook = getWorkbok(in, file);
         Sheet sheet = workbook.getSheetAt(0); //获取第一个Sheet
@@ -73,7 +76,8 @@ public class TestDailyServiceImpl implements TestDailyService {
                 addTestDaily(testDaily,file,scriptInfoRow);
             }
         }
-        return Results.ok(200,"操作成功");
+
+        return Results.okMsg();
     }
 
 
@@ -94,6 +98,7 @@ public class TestDailyServiceImpl implements TestDailyService {
     }
 
     private int addTestDaily(TestDaily testDaily,MultipartFile file,Row row) {
+//        testDaily = new TestDaily();
         testDaily.setScriptid(getCellValue(row, SCRIPTID_COLUMN));
         testDaily.setScriptDescription(getCellValue(row, DESCRIPTION_COLUMN));
         testDaily.setChannel(getCellValue(row, CHANNEL_COLUMN));//渠道
@@ -102,12 +107,16 @@ public class TestDailyServiceImpl implements TestDailyService {
         testDaily.setRemarks(getCellValue(row, REMARKS_COLUMN));//备注
         testDaily.setBasicReason(getCellValue(row, BASIC_REASON_COLUMN));
         testDaily.setIsDel(0);
+//        Long startTs = System.currentTimeMillis();
+//        testDaily.setVersion(startTs.toString());
         testDaily.setWorkDate(file.getOriginalFilename().replace(".xlsx",""));
         int i=testDailyMapper.insert(testDaily);
         return i;
     }
 
     private int updateTestDaily(String workDate,MultipartFile file) {
+//        testDaily = new TestDaily();
+//        String wDate=file.getOriginalFilename().replace(".xlsx","");
         int i=testDailyMapper.updateByWorkDate(workDate);
         return i;
     }
