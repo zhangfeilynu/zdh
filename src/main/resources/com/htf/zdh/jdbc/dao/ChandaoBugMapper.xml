@@ -15,10 +15,12 @@
     <result column="solution" jdbcType="VARCHAR" property="solution" />
     <result column="solution_version" jdbcType="VARCHAR" property="solutionVersion" />
     <result column="settlement_date" jdbcType="VARCHAR" property="settlementDate" />
+    <result column="functional_module" jdbcType="VARCHAR" property="functionalModule" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
   </resultMap>
   <sql id="Base_Column_List">
       ID, bug_number, bug_title, bug_status, is_sure, created, create_date, assigned, assigned_date,
-      solvers, solution, solution_version, settlement_date
+      solvers, solution, solution_version, settlement_date,functional_module,remarks
   </sql>
   <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
     select 
@@ -35,12 +37,12 @@
       bug_status, is_sure, created, 
       create_date, assigned, assigned_date, 
       solvers, solution, solution_version, 
-      settlement_date)
+      settlement_date,functional_module,remarks)
     values (#{bugNumber,jdbcType=VARCHAR}, #{bugTitle,jdbcType=VARCHAR},
       #{bugStatus,jdbcType=VARCHAR}, #{isSure,jdbcType=VARCHAR}, #{created,jdbcType=VARCHAR}, 
       #{createDate,jdbcType=VARCHAR}, #{assigned,jdbcType=VARCHAR}, #{assignedDate,jdbcType=VARCHAR}, 
       #{solvers,jdbcType=VARCHAR}, #{solution,jdbcType=VARCHAR}, #{solutionVersion,jdbcType=VARCHAR}, 
-      #{settlementDate,jdbcType=VARCHAR})
+      #{settlementDate,jdbcType=VARCHAR},#{functionalModule,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" parameterType="com.htf.zdh.jdbc.po.ChandaoBug">
     insert into chandao_bug
@@ -84,6 +86,12 @@
       <if test="settlementDate != null">
         settlement_date,
       </if>
+      <if test="functionalModule != null">
+        functional_module,
+      </if>
+      <if test="remarks != null">
+        remarks
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -124,6 +132,12 @@
       </if>
       <if test="settlementDate != null">
         #{settlementDate,jdbcType=VARCHAR},
+      </if>
+      <if test="functionalModule != null">
+        #{functionalModule,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -166,6 +180,12 @@
       <if test="settlementDate != null">
         settlement_date = #{settlementDate,jdbcType=VARCHAR},
       </if>
+      <if test="functionalModule != null">
+        functional_module,
+      </if>
+      <if test="remarks != null">
+        remarks
+      </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
@@ -182,7 +202,9 @@
       solvers = #{solvers,jdbcType=VARCHAR},
       solution = #{solution,jdbcType=VARCHAR},
       solution_version = #{solutionVersion,jdbcType=VARCHAR},
-      settlement_date = #{settlementDate,jdbcType=VARCHAR}
+      settlement_date = #{settlementDate,jdbcType=VARCHAR},
+      functional_module = #{functionalModule,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
     where ID = #{id,jdbcType=INTEGER}
   </update>
 
@@ -205,7 +227,9 @@
     solvers = #{solvers,jdbcType=VARCHAR},
     solution = #{solution,jdbcType=VARCHAR},
     solution_version = #{solutionVersion,jdbcType=VARCHAR},
-    settlement_date = #{settlementDate,jdbcType=VARCHAR}
+    settlement_date = #{settlementDate,jdbcType=VARCHAR},
+    functional_module = #{functionalModule,jdbcType=VARCHAR},
+    remarks = #{remarks,jdbcType=VARCHAR}
     where bug_number = #{bugNumber,jdbcType=VARCHAR}
   </update>
 

@@ -1,6 +1,8 @@
 package com.htf.zdh.controller;
 
 import com.htf.zdh.common.Results;
+import com.htf.zdh.controller.vo.Result;
+import com.htf.zdh.jdbc.po.ChandaoBug;
 import com.htf.zdh.service.ChandaoBugService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -32,7 +34,7 @@ public class ChandaoBugController {
             @ApiImplicitParam(name = "file", value = "文件", required = true, paramType = "form", dataType = "file") })
     @RequestMapping(value="/chandaoUpload",method= RequestMethod.POST)
     @ResponseBody
-    public Results itilUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
+    public Result<ChandaoBug> itilUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
         return chandaoBugService.uploadChandaoBugFile(file,request);
     }
 

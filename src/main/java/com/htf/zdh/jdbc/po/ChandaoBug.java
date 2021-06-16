@@ -27,6 +27,29 @@ public class ChandaoBug {
 
     private String settlementDate;
 
+    private String functionalModule;
+
+    private String remarks;
+
+    public ChandaoBug() {
+    }
+
+    public String getFunctionalModule() {
+        return functionalModule;
+    }
+
+    public void setFunctionalModule(String functionalModule) {
+        this.functionalModule = functionalModule;
+    }
+
+    public String getRemarks() {
+        return remarks;
+    }
+
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -130,4 +153,6 @@ public class ChandaoBug {
     public void setSettlementDate(String settlementDate) {
         this.settlementDate = settlementDate == null ? null : settlementDate.trim();
     }
+
+
 }

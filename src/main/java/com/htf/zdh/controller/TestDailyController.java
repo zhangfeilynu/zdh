@@ -2,6 +2,7 @@ package com.htf.zdh.controller;
 
 import com.htf.zdh.common.Results;
 import com.htf.zdh.controller.vo.Result;
+import com.htf.zdh.jdbc.po.TestDaily;
 import com.htf.zdh.service.TestDailyService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -42,7 +43,7 @@ public class TestDailyController {
             @ApiImplicitParam(name = "file", value = "文件", required = true, paramType = "form", dataType = "file") })
     @RequestMapping(value="/testDailyUpload",method= RequestMethod.POST)
     @ResponseBody
-    public Results itilUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
+    public Result<TestDaily> itilUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
        return testDailyService.uploadFile(file,request);
     }
 
