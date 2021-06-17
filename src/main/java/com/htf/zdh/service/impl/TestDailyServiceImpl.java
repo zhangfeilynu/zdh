@@ -53,13 +53,13 @@ public class TestDailyServiceImpl implements TestDailyService {
     @Override
     public Result<TestDaily> uploadFile(MultipartFile file, HttpServletRequest request) {
         Result<TestDaily> result=new Result<TestDaily>();
-        if (file.isEmpty()) {
+        if (file.getName().isEmpty()) {
+            logger.warn("请选择文件");
             result.setCode(221);
             result.setMessage("请选择文件");
             return result;
         }
         if (!(file.getOriginalFilename().endsWith(EXCEL_XLS) || file.getOriginalFilename().endsWith(EXCEL_XLSX))) {
-//            throw new Exception("文件不是Excel");
             logger.warn("文件不是Excel");
             result.setCode(500);
             result.setMessage("文件不是Excel");
@@ -82,7 +82,7 @@ public class TestDailyServiceImpl implements TestDailyService {
                     ||!"失败原因".equals(row5)||!"备注".equals(row6)||!"根本原因".equals(row7)){
                 result.setCode(202);
                 result.setMessage("选择的文件不是测试日报数据格式!");
-                logger.error("此文件不是测试日报数据格式!");
+                logger.warn("此文件不是测试日报数据格式!");
                 return result;
             }
             TestDaily testDaily = new TestDaily();

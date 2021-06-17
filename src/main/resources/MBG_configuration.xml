@@ -30,7 +30,7 @@
                              targetProject="D:/HTFWork/zdh/src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="chandao_bug" enableCountByExample="false"
+        <table tableName="use_cases" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"
                enableInsert="true" enableUpdateByPrimaryKey="true"

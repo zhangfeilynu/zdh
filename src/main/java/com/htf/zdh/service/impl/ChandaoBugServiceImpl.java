@@ -59,13 +59,17 @@ public class ChandaoBugServiceImpl implements ChandaoBugService {
     @Override
     public Result<ChandaoBug> uploadChandaoBugFile(MultipartFile file, HttpServletRequest request){
         Result<ChandaoBug> result=new Result<ChandaoBug>();
-        if (file.isEmpty()) {
+        if (file.getName().isEmpty()) {
+            logger.warn("请选择文件");
             result.setCode(221);
             result.setMessage("请选择文件");
             return result;
         }
         if (!(file.getOriginalFilename().endsWith(EXCEL_XLS) || file.getOriginalFilename().endsWith(EXCEL_XLSX))) {
             logger.warn("文件不是Excel");
+            result.setCode(500);
+            result.setMessage("文件不是Excel");
+            return result;
         }
         try {
             InputStream in = file.getInputStream();
@@ -84,17 +88,16 @@ public class ChandaoBugServiceImpl implements ChandaoBugService {
             String row9=sheet.getRow(0).getCell(9).toString();
             String row10=sheet.getRow(0).getCell(10).toString();
             String row11=sheet.getRow(0).getCell(11).toString();
-            String row12=sheet.getRow(0).getCell(12).toString();
-            String row13=sheet.getRow(0).getCell(13).toString();
-            logger.info(row0+row1+row2+row3+row4+row5+row6);
+//            String row12=sheet.getRow(0).getCell(12).toString();
+//            String row13=sheet.getRow(0).getCell(13).toString();
             //比较数据格式是否一致
             if(!"Bug编号".equals(row0)||!"Bug标题".equals(row1)||!"Bug状态".equals(row2)||!"是否确认".equals(row3)
                     ||!"由谁创建".equals(row4)||!"创建日期".equals(row5)||!"指派给".equals(row6)|| !"指派日期".equals(row7)
                     ||!"解决者".equals(row8)||!"解决方案".equals(row9)|| !"解决版本".equals(row10)
-                    |!"解决日期".equals(row11)||!"功能模块".equals(row12)||!"备注".equals(row13)){
+                    |!"解决日期".equals(row11)){
                 result.setCode(202);
                 result.setMessage("上传文件不是禅道bug数据格式!");
-                logger.error("上传文件不是禅道bug数据格式!");
+                logger.warn("上传文件不是禅道bug数据格式!");
                 return result;
             }
             ChandaoBug chandaoBug = new ChandaoBug();
@@ -121,12 +124,13 @@ public class ChandaoBugServiceImpl implements ChandaoBugService {
                     chandaoBug.setSolution(getCellValue(scriptInfoRow,SOLUTION_COLUMN));
                     chandaoBug.setSolutionVersion(getCellValue(scriptInfoRow,SOLUTION_VERSION_COLUMN));
                     chandaoBug.setSettlementDate(getCellValue(scriptInfoRow,SETTLEMENT_DATE_COLUMN));
-                    chandaoBug.setFunctionalModule(getCellValue(scriptInfoRow,FUNCTIONAL_MODULE_COLUMN));
-                    chandaoBug.setRemarks(getCellValue(scriptInfoRow,REMARKS_COLUMN));
+//                    chandaoBug.setFunctionalModule(getCellValue(scriptInfoRow,FUNCTIONAL_MODULE_COLUMN));
+//                    chandaoBug.setRemarks(getCellValue(scriptInfoRow,REMARKS_COLUMN));
                     int num = updateChandaoBug(chandaoBug, file);
                     if(num>0){
                         result.setCode(200);
                         result.setMessage("禅道bug数据导入数据库成功");
+                        logger.info("禅道bug数据导入数据库成功");
                     }
                     isAddChandaoBug = false;
                 }
@@ -136,6 +140,7 @@ public class ChandaoBugServiceImpl implements ChandaoBugService {
                     if(num>0){
                         result.setCode(200);
                         result.setMessage("禅道bug数据导入数据库成功");
+                        logger.info("禅道bug数据导入数据库成功");
                     }
                 }
             }
