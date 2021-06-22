@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.htf.zdh.jdbc.dao.ChandaoBugMapper">
+  <resultMap id="BaseResultMap" type="com.htf.zdh.jdbc.po.ChandaoBug">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="bug_number" jdbcType="VARCHAR" property="bugNumber" />
+    <result column="bug_title" jdbcType="VARCHAR" property="bugTitle" />
+    <result column="bug_status" jdbcType="VARCHAR" property="bugStatus" />
+    <result column="is_sure" jdbcType="VARCHAR" property="isSure" />
+    <result column="created" jdbcType="VARCHAR" property="created" />
+    <result column="create_date" jdbcType="VARCHAR" property="createDate" />
+    <result column="assigned" jdbcType="VARCHAR" property="assigned" />
+    <result column="assigned_date" jdbcType="VARCHAR" property="assignedDate" />
+    <result column="solvers" jdbcType="VARCHAR" property="solvers" />
+    <result column="solution" jdbcType="VARCHAR" property="solution" />
+    <result column="solution_version" jdbcType="VARCHAR" property="solutionVersion" />
+    <result column="settlement_date" jdbcType="VARCHAR" property="settlementDate" />
+    <result column="functional_module" jdbcType="VARCHAR" property="functionalModule" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <sql id="Base_Column_List">
+      ID, bug_number, bug_title, bug_status, is_sure, created, create_date, assigned, assigned_date,
+      solvers, solution, solution_version, settlement_date,functional_module,remarks
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from chandao_bug
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from chandao_bug
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.htf.zdh.jdbc.po.ChandaoBug">
+    insert into chandao_bug (bug_number, bug_title,
+      bug_status, is_sure, created, 
+      create_date, assigned, assigned_date, 
+      solvers, solution, solution_version, 
+      settlement_date,functional_module,remarks)
+    values (#{bugNumber,jdbcType=VARCHAR}, #{bugTitle,jdbcType=VARCHAR},
+      #{bugStatus,jdbcType=VARCHAR}, #{isSure,jdbcType=VARCHAR}, #{created,jdbcType=VARCHAR}, 
+      #{createDate,jdbcType=VARCHAR}, #{assigned,jdbcType=VARCHAR}, #{assignedDate,jdbcType=VARCHAR}, 
+      #{solvers,jdbcType=VARCHAR}, #{solution,jdbcType=VARCHAR}, #{solutionVersion,jdbcType=VARCHAR}, 
+      #{settlementDate,jdbcType=VARCHAR},#{functionalModule,jdbcType=VARCHAR}, #{remarks,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.htf.zdh.jdbc.po.ChandaoBug">
+    insert into chandao_bug
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="bugNumber != null">
+        bug_number,
+      </if>
+      <if test="bugTitle != null">
+        bug_title,
+      </if>
+      <if test="bugStatus != null">
+        bug_status,
+      </if>
+      <if test="isSure != null">
+        is_sure,
+      </if>
+      <if test="created != null">
+        created,
+      </if>
+      <if test="createDate != null">
+        create_date,
+      </if>
+      <if test="assigned != null">
+        assigned,
+      </if>
+      <if test="assignedDate != null">
+        assigned_date,
+      </if>
+      <if test="solvers != null">
+        solvers,
+      </if>
+      <if test="solution != null">
+        solution,
+      </if>
+      <if test="solutionVersion != null">
+        solution_version,
+      </if>
+      <if test="settlementDate != null">
+        settlement_date,
+      </if>
+      <if test="functionalModule != null">
+        functional_module,
+      </if>
+      <if test="remarks != null">
+        remarks
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="bugNumber != null">
+        #{bugNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bugTitle != null">
+        #{bugTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bugStatus != null">
+        #{bugStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="isSure != null">
+        #{isSure,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        #{created,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="assigned != null">
+        #{assigned,jdbcType=VARCHAR},
+      </if>
+      <if test="assignedDate != null">
+        #{assignedDate,jdbcType=VARCHAR},
+      </if>
+      <if test="solvers != null">
+        #{solvers,jdbcType=VARCHAR},
+      </if>
+      <if test="solution != null">
+        #{solution,jdbcType=VARCHAR},
+      </if>
+      <if test="solutionVersion != null">
+        #{solutionVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementDate != null">
+        #{settlementDate,jdbcType=VARCHAR},
+      </if>
+      <if test="functionalModule != null">
+        #{functionalModule,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.htf.zdh.jdbc.po.ChandaoBug">
+    update chandao_bug
+    <set>
+      <if test="bugNumber != null">
+        bug_number = #{bugNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="bugTitle != null">
+        bug_title = #{bugTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="bugStatus != null">
+        bug_status = #{bugStatus,jdbcType=VARCHAR},
+      </if>
+      <if test="isSure != null">
+        is_sure = #{isSure,jdbcType=VARCHAR},
+      </if>
+      <if test="created != null">
+        created = #{created,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=VARCHAR},
+      </if>
+      <if test="assigned != null">
+        assigned = #{assigned,jdbcType=VARCHAR},
+      </if>
+      <if test="assignedDate != null">
+        assigned_date = #{assignedDate,jdbcType=VARCHAR},
+      </if>
+      <if test="solvers != null">
+        solvers = #{solvers,jdbcType=VARCHAR},
+      </if>
+      <if test="solution != null">
+        solution = #{solution,jdbcType=VARCHAR},
+      </if>
+      <if test="solutionVersion != null">
+        solution_version = #{solutionVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="settlementDate != null">
+        settlement_date = #{settlementDate,jdbcType=VARCHAR},
+      </if>
+      <if test="functionalModule != null">
+        functional_module,
+      </if>
+      <if test="remarks != null">
+        remarks
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.htf.zdh.jdbc.po.ChandaoBug">
+    update chandao_bug
+    set bug_number = #{bugNumber,jdbcType=VARCHAR},
+      bug_title = #{bugTitle,jdbcType=VARCHAR},
+      bug_status = #{bugStatus,jdbcType=VARCHAR},
+      is_sure = #{isSure,jdbcType=VARCHAR},
+      created = #{created,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=VARCHAR},
+      assigned = #{assigned,jdbcType=VARCHAR},
+      assigned_date = #{assignedDate,jdbcType=VARCHAR},
+      solvers = #{solvers,jdbcType=VARCHAR},
+      solution = #{solution,jdbcType=VARCHAR},
+      solution_version = #{solutionVersion,jdbcType=VARCHAR},
+      settlement_date = #{settlementDate,jdbcType=VARCHAR},
+      functional_module = #{functionalModule,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByBugNumber" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from chandao_bug
+    where bug_number = #{bugNumber,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateByBugNumber" parameterType="com.htf.zdh.jdbc.po.ChandaoBug">
+    update chandao_bug
+    set bug_title = #{bugTitle,jdbcType=VARCHAR},
+    bug_status = #{bugStatus,jdbcType=VARCHAR},
+    is_sure = #{isSure,jdbcType=VARCHAR},
+    created = #{created,jdbcType=VARCHAR},
+    create_date = #{createDate,jdbcType=VARCHAR},
+    assigned = #{assigned,jdbcType=VARCHAR},
+    assigned_date = #{assignedDate,jdbcType=VARCHAR},
+    solvers = #{solvers,jdbcType=VARCHAR},
+    solution = #{solution,jdbcType=VARCHAR},
+    solution_version = #{solutionVersion,jdbcType=VARCHAR},
+    settlement_date = #{settlementDate,jdbcType=VARCHAR},
+    functional_module = #{functionalModule,jdbcType=VARCHAR},
+    remarks = #{remarks,jdbcType=VARCHAR}
+    where bug_number = #{bugNumber,jdbcType=VARCHAR}
+  </update>
+
+</mapper>

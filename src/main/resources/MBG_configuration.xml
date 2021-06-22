@@ -11,26 +11,26 @@
         <!-- 生发环境数据库配置:修改配置 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
                         connectionURL="jdbc:mysql://localhost:3306/zdh"
-                        userId="root" password="123456">
+                        userId="zdh" password="zdh123456">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
         <!--targetProject请使用绝对路径-->
         <javaModelGenerator targetPackage="com.htf.zdh.jdbc.po"
-                            targetProject="D:/workspace/zdh/src/main/java">
+                            targetProject="D:/HTFWork/zdh/src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
         <sqlMapGenerator targetPackage="com.htf.zdh.jdbc.dao"
-                         targetProject="D:/workspace/zdh/src/main/resources">
+                         targetProject="D:/HTFWork/zdh/src/main/resources">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
         <javaClientGenerator type="XMLMAPPER" targetPackage="com.htf.zdh.jdbc.dao"
-                             targetProject="D:/workspace/zdh/src/main/java">
+                             targetProject="D:/HTFWork/zdh/src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="api_visit" enableCountByExample="false"
+        <table tableName="use_cases" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"
                enableInsert="true" enableUpdateByPrimaryKey="true"

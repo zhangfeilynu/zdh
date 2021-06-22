@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.htf.zdh.jdbc.dao.TestDailyMapper">
+  <resultMap id="BaseResultMap" type="com.htf.zdh.jdbc.po.TestDaily">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="scriptID" jdbcType="VARCHAR" property="scriptid" />
+    <result column="script_description" jdbcType="VARCHAR" property="scriptDescription" />
+    <result column="channel" jdbcType="VARCHAR" property="channel" />
+    <result column="edition" jdbcType="VARCHAR" property="edition" />
+    <result column="fail_reasons" jdbcType="VARCHAR" property="failReasons" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+    <result column="basic_reason" jdbcType="VARCHAR" property="basicReason" />
+    <result column="work_date" jdbcType="VARCHAR" property="workDate" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="version" jdbcType="VARCHAR" property="version" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, scriptID, script_description, channel, edition, fail_reasons, remarks, basic_reason, 
+    work_date, create_time, is_del, version
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from test_daily
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from test_daily
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.htf.zdh.jdbc.po.TestDaily">
+    insert into test_daily (ID, scriptID, script_description, 
+      channel, edition, fail_reasons, 
+      remarks, basic_reason, work_date, is_del, version
+      )
+    values (#{id,jdbcType=INTEGER}, #{scriptid,jdbcType=VARCHAR}, #{scriptDescription,jdbcType=VARCHAR}, 
+      #{channel,jdbcType=VARCHAR}, #{edition,jdbcType=VARCHAR}, #{failReasons,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{basicReason,jdbcType=VARCHAR}, #{workDate,jdbcType=VARCHAR}, #{isDel,jdbcType=INTEGER}, #{version,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.htf.zdh.jdbc.po.TestDaily">
+    insert into test_daily
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="scriptid != null">
+        scriptID,
+      </if>
+      <if test="scriptDescription != null">
+        script_description,
+      </if>
+      <if test="channel != null">
+        channel,
+      </if>
+      <if test="edition != null">
+        edition,
+      </if>
+      <if test="failReasons != null">
+        fail_reasons,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="basicReason != null">
+        basic_reason,
+      </if>
+      <if test="workDate != null">
+        work_date,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="version != null">
+        version,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="scriptid != null">
+        #{scriptid,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptDescription != null">
+        #{scriptDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="edition != null">
+        #{edition,jdbcType=VARCHAR},
+      </if>
+      <if test="failReasons != null">
+        #{failReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="basicReason != null">
+        #{basicReason,jdbcType=VARCHAR},
+      </if>
+      <if test="workDate != null">
+        #{workDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        #{version,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.htf.zdh.jdbc.po.TestDaily">
+    update test_daily
+    <set>
+      <if test="scriptid != null">
+        scriptID = #{scriptid,jdbcType=VARCHAR},
+      </if>
+      <if test="scriptDescription != null">
+        script_description = #{scriptDescription,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null">
+        channel = #{channel,jdbcType=VARCHAR},
+      </if>
+      <if test="edition != null">
+        edition = #{edition,jdbcType=VARCHAR},
+      </if>
+      <if test="failReasons != null">
+        fail_reasons = #{failReasons,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="basicReason != null">
+        basic_reason = #{basicReason,jdbcType=VARCHAR},
+      </if>
+      <if test="workDate != null">
+        work_date = #{workDate,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="version != null">
+        version = #{version,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.htf.zdh.jdbc.po.TestDaily">
+    update test_daily
+    set scriptID = #{scriptid,jdbcType=VARCHAR},
+      script_description = #{scriptDescription,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=VARCHAR},
+      edition = #{edition,jdbcType=VARCHAR},
+      fail_reasons = #{failReasons,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      basic_reason = #{basicReason,jdbcType=VARCHAR},
+      work_date = #{workDate,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=INTEGER},
+      version = #{version,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="findTestDailyByWorkDate" parameterType="map" resultMap="BaseResultMap">
+<!--    select <include refid="Base_Column_List"/>-->
+    select ID, scriptID, script_description, channel, edition, fail_reasons, remarks, basic_reason,
+    work_date, create_time, is_del, version
+    from test_daily
+    where work_date = #{workDate,jdbcType=VARCHAR}
+  </select>
+
+
+  <update id="updateByWorkDate" parameterType="java.lang.String">
+    update test_daily
+    set is_del = 1
+    where work_date = #{workDate,jdbcType=VARCHAR}
+  </update>
+</mapper>

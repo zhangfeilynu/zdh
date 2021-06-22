@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.htf.zdh.jdbc.dao.UseCasesMapper">
+  <resultMap id="BaseResultMap" type="com.htf.zdh.jdbc.po.UseCases">
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="case_number" jdbcType="VARCHAR" property="caseNumber" />
+    <result column="case_title" jdbcType="VARCHAR" property="caseTitle" />
+    <result column="preconditions" jdbcType="VARCHAR" property="preconditions" />
+    <result column="keyword" jdbcType="VARCHAR" property="keyword" />
+    <result column="functional_module" jdbcType="VARCHAR" property="functionalModule" />
+    <result column="remarks" jdbcType="VARCHAR" property="remarks" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.htf.zdh.jdbc.po.UseCasesWithBLOBs">
+    <result column="step" jdbcType="LONGVARCHAR" property="step" />
+    <result column="expect" jdbcType="LONGVARCHAR" property="expect" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    ID, case_number, case_title, preconditions, keyword, functional_module, remarks
+  </sql>
+  <sql id="Blob_Column_List">
+    step, expect
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from use_cases
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from use_cases
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.htf.zdh.jdbc.po.UseCasesWithBLOBs">
+    insert into use_cases (ID, case_number, case_title, 
+      preconditions, keyword, functional_module, 
+      remarks, step, expect
+      )
+    values (#{id,jdbcType=INTEGER}, #{caseNumber,jdbcType=VARCHAR}, #{caseTitle,jdbcType=VARCHAR},
+      #{preconditions,jdbcType=VARCHAR}, #{keyword,jdbcType=VARCHAR}, #{functionalModule,jdbcType=VARCHAR}, 
+      #{remarks,jdbcType=VARCHAR}, #{step,jdbcType=LONGVARCHAR}, #{expect,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.htf.zdh.jdbc.po.UseCasesWithBLOBs">
+    insert into use_cases
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        ID,
+      </if>
+      <if test="caseNumber != null">
+        case_number,
+      </if>
+      <if test="caseTitle != null">
+        case_title,
+      </if>
+      <if test="preconditions != null">
+        preconditions,
+      </if>
+      <if test="keyword != null">
+        keyword,
+      </if>
+      <if test="functionalModule != null">
+        functional_module,
+      </if>
+      <if test="remarks != null">
+        remarks,
+      </if>
+      <if test="step != null">
+        step,
+      </if>
+      <if test="expect != null">
+        expect,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="caseNumber != null">
+        #{caseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="caseTitle != null">
+        #{caseTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="preconditions != null">
+        #{preconditions,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null">
+        #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="functionalModule != null">
+        #{functionalModule,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="step != null">
+        #{step,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="expect != null">
+        #{expect,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.htf.zdh.jdbc.po.UseCasesWithBLOBs">
+    update use_cases
+    <set>
+      <if test="caseNumber != null">
+        case_number = #{caseNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="caseTitle != null">
+        case_title = #{caseTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="preconditions != null">
+        preconditions = #{preconditions,jdbcType=VARCHAR},
+      </if>
+      <if test="keyword != null">
+        keyword = #{keyword,jdbcType=VARCHAR},
+      </if>
+      <if test="functionalModule != null">
+        functional_module = #{functionalModule,jdbcType=VARCHAR},
+      </if>
+      <if test="remarks != null">
+        remarks = #{remarks,jdbcType=VARCHAR},
+      </if>
+      <if test="step != null">
+        step = #{step,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="expect != null">
+        expect = #{expect,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.htf.zdh.jdbc.po.UseCasesWithBLOBs">
+    update use_cases
+    set case_number = #{caseNumber,jdbcType=VARCHAR},
+      case_title = #{caseTitle,jdbcType=VARCHAR},
+      preconditions = #{preconditions,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      functional_module = #{functionalModule,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR},
+      step = #{step,jdbcType=LONGVARCHAR},
+      expect = #{expect,jdbcType=LONGVARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.htf.zdh.jdbc.po.UseCases">
+    update use_cases
+    set case_number = #{caseNumber,jdbcType=VARCHAR},
+      case_title = #{caseTitle,jdbcType=VARCHAR},
+      preconditions = #{preconditions,jdbcType=VARCHAR},
+      keyword = #{keyword,jdbcType=VARCHAR},
+      functional_module = #{functionalModule,jdbcType=VARCHAR},
+      remarks = #{remarks,jdbcType=VARCHAR}
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+
+  <select id="selectByCaseNumber" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from use_cases
+    where case_number = #{caseNumber,jdbcType=VARCHAR}
+  </select>
+
+  <update id="updateByCaseNumber" parameterType="com.htf.zdh.jdbc.po.UseCasesWithBLOBs">
+    update use_cases
+    set case_title = #{caseTitle,jdbcType=VARCHAR},
+    preconditions = #{preconditions,jdbcType=VARCHAR},
+    keyword = #{keyword,jdbcType=VARCHAR},
+    functional_module = #{functionalModule,jdbcType=VARCHAR},
+    remarks = #{remarks,jdbcType=VARCHAR},
+    step = #{step,jdbcType=LONGVARCHAR},
+    expect = #{expect,jdbcType=LONGVARCHAR}
+    where case_number = #{caseNumber,jdbcType=VARCHAR}
+  </update>
+
+</mapper>
