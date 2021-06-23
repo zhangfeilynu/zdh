@@ -57,17 +57,17 @@ public class ChandaoBugServiceImpl implements ChandaoBugService {
     ChandaoBugMapper chandaoBugMapper;
 
     @Override
-    public Result<ChandaoBug> uploadChandaoBugFile(MultipartFile file, HttpServletRequest request){
+    public Result<ChandaoBug> uploadChandaoBugFile(MultipartFile file){
         Result<ChandaoBug> result=new Result<ChandaoBug>();
         if (file.getName().isEmpty()) {
             logger.warn("请选择文件");
-            result.setCode(221);
+            result.setCode(204);
             result.setMessage("请选择文件");
             return result;
         }
         if (!(file.getOriginalFilename().endsWith(EXCEL_XLS) || file.getOriginalFilename().endsWith(EXCEL_XLSX))) {
             logger.warn("文件不是Excel");
-            result.setCode(500);
+            result.setCode(415);
             result.setMessage("文件不是Excel");
             return result;
         }
@@ -126,7 +126,7 @@ public class ChandaoBugServiceImpl implements ChandaoBugService {
                     chandaoBug.setSettlementDate(getCellValue(scriptInfoRow,SETTLEMENT_DATE_COLUMN));
 //                    chandaoBug.setFunctionalModule(getCellValue(scriptInfoRow,FUNCTIONAL_MODULE_COLUMN));
 //                    chandaoBug.setRemarks(getCellValue(scriptInfoRow,REMARKS_COLUMN));
-                    int num = updateChandaoBug(chandaoBug, file);
+                    int num = updateChandaoBug(chandaoBug);
                     if(num>0){
                         result.setCode(200);
                         result.setMessage("禅道bug数据导入数据库成功");
@@ -136,7 +136,7 @@ public class ChandaoBugServiceImpl implements ChandaoBugService {
                 }
                 //添加数据
                 if (isAddChandaoBug) {
-                    int num = addChandaoBug(chandaoBug, file, scriptInfoRow);
+                    int num = addChandaoBug(chandaoBug, scriptInfoRow);
                     if(num>0){
                         result.setCode(200);
                         result.setMessage("禅道bug数据导入数据库成功");
@@ -153,7 +153,7 @@ public class ChandaoBugServiceImpl implements ChandaoBugService {
         }
     }
 
-    private int addChandaoBug(ChandaoBug chandaoBug, MultipartFile file, Row row) {
+    private int addChandaoBug(ChandaoBug chandaoBug, Row row) {
         chandaoBug.setBugNumber(getCellValue(row, BUG_NUMBER_COLUMN));
         chandaoBug.setBugTitle(getCellValue(row,BUG_TITLE_COLUMN));
         chandaoBug.setBugStatus(getCellValue(row,BUG_STATUS_COLUMN));
@@ -172,7 +172,7 @@ public class ChandaoBugServiceImpl implements ChandaoBugService {
         return i;
     }
 
-    private int updateChandaoBug(ChandaoBug chandaoBug, MultipartFile file) {
+    private int updateChandaoBug(ChandaoBug chandaoBug) {
         int i=chandaoBugMapper.updateByBugNumber(chandaoBug);
         return i;
     }

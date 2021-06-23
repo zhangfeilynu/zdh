@@ -8,5 +8,5 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletRequest;
 
 public interface ChandaoBugService {
-    Result<ChandaoBug> uploadChandaoBugFile(MultipartFile file, HttpServletRequest request) ;
+    Result<ChandaoBug> uploadChandaoBugFile(MultipartFile file) ;
 }

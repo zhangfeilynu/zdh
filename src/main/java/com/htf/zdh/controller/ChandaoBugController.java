@@ -34,8 +34,8 @@ public class ChandaoBugController {
             @ApiImplicitParam(name = "file", value = "文件", required = true, paramType = "form", dataType = "file") })
     @RequestMapping(value="/chandaoUpload",method= RequestMethod.POST)
     @ResponseBody
-    public Result<ChandaoBug> itilUpload(@RequestParam("file") MultipartFile file, HttpServletRequest request) throws Exception {
-        return chandaoBugService.uploadChandaoBugFile(file,request);
+    public Result<ChandaoBug> itilUpload(@RequestParam("file") MultipartFile file) throws Exception {
+        return chandaoBugService.uploadChandaoBugFile(file);
     }
 
 }

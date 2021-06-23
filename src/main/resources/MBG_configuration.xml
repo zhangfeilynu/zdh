@@ -30,7 +30,7 @@
                              targetProject="D:/HTFWork/zdh/src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
-        <table tableName="use_cases" enableCountByExample="false"
+        <table tableName="portal_task_01" enableCountByExample="false"
                enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false"
                enableInsert="true" enableUpdateByPrimaryKey="true"
