@@ -46,25 +46,12 @@ public class PortalTaskController {
     @ResponseBody
     public Result<PortalTaskBo> getTaskInList(@RequestParam(required = false) String taskDescr,
                                                     @RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime,
-                                                    @RequestParam Integer pageNum, @RequestParam Integer pageSize) throws  Exception{
+                                                    @RequestParam Integer pageNum, @RequestParam Integer pageSize) throws Exception{
         Result<PortalTaskBo> result = new Result<PortalTaskBo>();
         result.setCode(1);
         result.setMessage("查询成功");
-        if (startTime != null && startTime != ""&&endTime != null && endTime != "") {
-            startTime=startTime+" 00:00:00";
-            endTime=endTime+" 23:59:59";
-            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            Long sTime = sd.parse(startTime).getTime();
-            Long eTime = sd.parse(endTime).getTime();
-
-            PortalTaskBo portalTaskBo = portalTaskService.selectTestIn(taskDescr,sTime.toString(),eTime.toString(),pageNum,pageSize);
-            result.setData(portalTaskBo);
-            return result;
-        }else{
-            PortalTaskBo portalTaskBo = portalTaskService.selectTestIn(taskDescr,startTime,endTime,pageNum,pageSize);
-            result.setData(portalTaskBo);
-            return result;
-        }
-
+        PortalTaskBo portalTaskBo = portalTaskService.selectTestIn(taskDescr,startTime,endTime,pageNum,pageSize);
+        result.setData(portalTaskBo);
+        return result;
     }
 }

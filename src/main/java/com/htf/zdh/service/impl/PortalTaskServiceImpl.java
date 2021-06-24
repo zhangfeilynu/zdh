@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -35,23 +36,35 @@ public class PortalTaskServiceImpl implements PortalTaskService {
     PortalTask01Mapper portalTask01Mapper;
 
     @Override
-    public PortalTaskBo selectTestIn(String taskDescr, String startTime,String endTime, Integer pageNum, Integer pageSize) {
+    public PortalTaskBo selectTestIn(String taskDescr, String startTime,String endTime, Integer pageNum, Integer pageSize) throws Exception{
         PortalTaskBo result = new PortalTaskBo();
+        String strSTime=null;
+        String strETime=null;
+        if (startTime != null && startTime != "" && !"null".equals(startTime)) {
+            startTime = startTime + " 00:00:00";
+            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Long sTime = sd.parse(startTime).getTime();
+            strSTime=sTime.toString();
+        }
+        if(endTime != null && endTime != "" && !"null".equals(startTime)){
+            endTime = endTime + " 23:59:59";
+            SimpleDateFormat sd = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Long eTime = sd.parse(endTime).getTime();
+            strETime=eTime.toString();
+        }
         // 设置分页
         PageHelper.startPage(pageNum, pageSize);
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
 
-        List<PortalTask01WithBLOBs> list = portalTask01Mapper.selectTasks(taskDescr,startTime,endTime);
+        List<PortalTask01WithBLOBs> list = portalTask01Mapper.selectTasks(taskDescr,strSTime,strETime);
 
         // 获取总记录数
         PageInfo<PortalTask01WithBLOBs> pageInfo = new PageInfo<>(list);
-        Long total = pageInfo.getTotal();
-        result.setTotal(total);
+        result.setTotal(pageInfo.getTotal());
 
         // 数据处理
         List<PortalTask01WithBLOBs> results = new ArrayList<>();
-
         List<PortalTaskPo> protalTaskPoList = new ArrayList<PortalTaskPo>();
         // 如果pageNmu超过最后一页
         if (pageNum > pageInfo.getLastPage()) {
@@ -64,41 +77,33 @@ public class PortalTaskServiceImpl implements PortalTaskService {
             PortalTaskPo portalTaskPo=new PortalTaskPo();
             //results.add(item);
             portalTaskPo.setTaskDescr(item.getTaskDescr());
-            logger.info("content::"+item.getContent());
             JsonPath jsonPath = new JsonPath(item.getContent());
             //获取开始时间
-            String sTime = jsonPath.getString("createtime");
+            String createtime = jsonPath.getString("createtime");
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String createtime = sdf.format(new Date(Long.parseLong(sTime)));
-            portalTaskPo.setStartTime(createtime);
+            portalTaskPo.setStartTime(sdf.format(new Date(Long.parseLong(createtime))));
             //获取结束时间
-            String eTime=jsonPath.getString("finishTime");
-            String endTimes = sdf.format(new Date(Long.parseLong(eTime)));
-            portalTaskPo.setEndTime(endTimes);
+            String finishTime=jsonPath.getString("finishTime");
+            portalTaskPo.setEndTime(sdf.format(new Date(Long.parseLong(finishTime))));
 
             //获取总用例数
             Integer totalCases=jsonPath.getInt("scriptTotal");
-            logger.info("scriptTotal::"+totalCases);
             portalTaskPo.setTotalCases(totalCases);
             //获取成功数
             Integer successNumber=jsonPath.getInt("taskSummary.testResult[0].val");
-            logger.info("successNumber::"+successNumber);
             portalTaskPo.setSuccessNumber(successNumber);
             //获取失败数
             if(jsonPath.getString("taskSummary.testResult[1].val")==null){
-                logger.info("fail 0::"+0);
                 portalTaskPo.setFailNumber(0);
             }
             if(jsonPath.getString("taskSummary.testResult[1].val")!=null){
                 int failNumber=jsonPath.getInt("taskSummary.testResult[1].val");
-                logger.info("failNumber::"+failNumber);
                 portalTaskPo.setFailNumber(failNumber);
             }
             if(jsonPath.getString("taskSummary.testResult[2].val")!=null){
                 int failNumber1=jsonPath.getInt("taskSummary.testResult[1].val");
                 int failNumber2=jsonPath.getInt("taskSummary.testResult[2].val");
                 int failSum=failNumber1+failNumber2;
-                logger.info("failNumber::"+failNumber1+failNumber2);
                 portalTaskPo.setFailNumber(failSum);
             }
             if(jsonPath.getString("taskSummary.testResult[3].val")!=null){
@@ -106,7 +111,6 @@ public class PortalTaskServiceImpl implements PortalTaskService {
                 int failNumber2=jsonPath.getInt("taskSummary.testResult[2].val");
                 int failNumber3=jsonPath.getInt("taskSummary.testResult[3].val");
                 int failSum=failNumber1+failNumber2+failNumber3;
-                logger.info("failSum::"+failSum);
                 portalTaskPo.setFailNumber(failSum);
             }
 
@@ -114,12 +118,11 @@ public class PortalTaskServiceImpl implements PortalTaskService {
             DecimalFormat df = new DecimalFormat("0.00");
             String s = df.format((float)successNumber/totalCases*100);
             portalTaskPo.setSuccessRate(s+"%");
-            logger.info("xxxx::"+portalTaskPo.getSuccessRate());
             protalTaskPoList.add(portalTaskPo);
-
         }
 //        result.setPortalTask01WithBLOBsList(results);
         result.setResultList(protalTaskPoList);
         return result;
     }
 }
+                                                                                                                                                                                                                                                                                                                                                                
