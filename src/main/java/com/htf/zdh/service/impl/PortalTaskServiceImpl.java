@@ -36,7 +36,7 @@ public class PortalTaskServiceImpl implements PortalTaskService {
     PortalTask01Mapper portalTask01Mapper;
 
     @Override
-    public PortalTaskBo selectTestIn(String taskDescr, String startTime,String endTime, Integer pageNum, Integer pageSize) throws Exception{
+    public PortalTaskBo selectTestIn(String startTime,String endTime, Integer pageNum, Integer pageSize) throws Exception{
         PortalTaskBo result = new PortalTaskBo();
         String strSTime=null;
         String strETime=null;
@@ -56,8 +56,7 @@ public class PortalTaskServiceImpl implements PortalTaskService {
         PageHelper.startPage(pageNum, pageSize);
         result.setPageNum(pageNum);
         result.setPageSize(pageSize);
-
-        List<PortalTask01WithBLOBs> list = portalTask01Mapper.selectTasks(taskDescr,strSTime,strETime);
+        List<PortalTask01WithBLOBs> list = portalTask01Mapper.selectTasks(strSTime,strETime);
 
         // 获取总记录数
         PageInfo<PortalTask01WithBLOBs> pageInfo = new PageInfo<>(list);
@@ -77,42 +76,43 @@ public class PortalTaskServiceImpl implements PortalTaskService {
             PortalTaskPo portalTaskPo=new PortalTaskPo();
             //results.add(item);
             portalTaskPo.setTaskDescr(item.getTaskDescr());
+            //logger.info("Taskid::"+item.getTaskid());
             JsonPath jsonPath = new JsonPath(item.getContent());
             //获取开始时间
             String createtime = jsonPath.getString("createtime");
             SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
             portalTaskPo.setStartTime(sdf.format(new Date(Long.parseLong(createtime))));
             //获取结束时间
-            String finishTime=jsonPath.getString("finishTime");
-            portalTaskPo.setEndTime(sdf.format(new Date(Long.parseLong(finishTime))));
-
-            //获取总用例数
-            Integer totalCases=jsonPath.getInt("scriptTotal");
-            portalTaskPo.setTotalCases(totalCases);
+            if(jsonPath.getString("finishTime")!=null){
+                portalTaskPo.setEndTime(sdf.format(new Date(Long.parseLong(jsonPath.getString("finishTime")))));
+            }
+            if(jsonPath.getString("finishTime")==null){
+                portalTaskPo.setEndTime("");
+            }
             //获取成功数
-            Integer successNumber=jsonPath.getInt("taskSummary.testResult[0].val");
+            int successNumber=jsonPath.getInt("taskSummary.testResult[0].val");
             portalTaskPo.setSuccessNumber(successNumber);
             //获取失败数
-            if(jsonPath.getString("taskSummary.testResult[1].val")==null){
-                portalTaskPo.setFailNumber(0);
-            }
+            int failNumber=0;
             if(jsonPath.getString("taskSummary.testResult[1].val")!=null){
-                int failNumber=jsonPath.getInt("taskSummary.testResult[1].val");
-                portalTaskPo.setFailNumber(failNumber);
+                failNumber+=jsonPath.getInt("taskSummary.testResult[1].val");
             }
             if(jsonPath.getString("taskSummary.testResult[2].val")!=null){
-                int failNumber1=jsonPath.getInt("taskSummary.testResult[1].val");
-                int failNumber2=jsonPath.getInt("taskSummary.testResult[2].val");
-                int failSum=failNumber1+failNumber2;
-                portalTaskPo.setFailNumber(failSum);
+                failNumber+=jsonPath.getInt("taskSummary.testResult[2].val");
             }
             if(jsonPath.getString("taskSummary.testResult[3].val")!=null){
-                int failNumber1=jsonPath.getInt("taskSummary.testResult[1].val");
-                int failNumber2=jsonPath.getInt("taskSummary.testResult[2].val");
-                int failNumber3=jsonPath.getInt("taskSummary.testResult[3].val");
-                int failSum=failNumber1+failNumber2+failNumber3;
-                portalTaskPo.setFailNumber(failSum);
+                failNumber+=jsonPath.getInt("taskSummary.testResult[3].val");
             }
+            if(jsonPath.getString("taskSummary.testResult[4].val")!=null){
+                failNumber+=jsonPath.getInt("taskSummary.testResult[4].val");
+            }
+            if(jsonPath.getString("taskSummary.testResult[5].val")!=null){
+                failNumber+=jsonPath.getInt("taskSummary.testResult[5].val");
+            }
+            portalTaskPo.setFailNumber(failNumber);
+            //用例总数
+            int totalCases=successNumber+failNumber;
+            portalTaskPo.setTotalCases(totalCases);
 
             //计算成功率
             DecimalFormat df = new DecimalFormat("0.00");

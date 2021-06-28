@@ -7,6 +7,6 @@ import com.htf.zdh.service.bo.PortalTaskBo;
 import com.mysql.fabric.xmlrpc.base.Data;
 
 public interface PortalTaskService {
-    PortalTaskBo selectTestIn(String taskDescr, String startTime, String endTime, Integer pageNum, Integer pageSize) throws Exception;
+    PortalTaskBo selectTestIn(String startTime, String endTime, Integer pageNum, Integer pageSize) throws Exception;
 
 }

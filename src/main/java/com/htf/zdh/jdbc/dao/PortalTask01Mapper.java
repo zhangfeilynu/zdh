@@ -24,5 +24,5 @@ public interface PortalTask01Mapper {
 
     int updateByPrimaryKey(PortalTask01 record);
 
-    List<PortalTask01WithBLOBs> selectTasks(@Param("taskDescr") String taskDes, @Param("startTime") String startTime, @Param("endTime") String endTime);
+    List<PortalTask01WithBLOBs> selectTasks(@Param("startTime") String startTime, @Param("endTime") String endTime);
 }

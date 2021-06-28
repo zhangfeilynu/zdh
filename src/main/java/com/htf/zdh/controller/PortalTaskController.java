@@ -37,20 +37,18 @@ public class PortalTaskController {
 
     @ApiOperation(value = "查询testIn数据", notes = "查询testIn数据")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "taskDescr", value = "任务名称", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "startTime", value = "开始时间1", required = false, paramType = "query", dataType = "Data"),
             @ApiImplicitParam(name = "endTime", value = "开始时间2", required = false, paramType = "query", dataType = "Data"),
             @ApiImplicitParam(name = "pageNum", value = "页码", required = true, paramType = "query", dataType = "int"),
             @ApiImplicitParam(name = "pageSize", value = "每页显示的数量", required = true, paramType = "query", dataType = "int") })
     @RequestMapping(value = "/tasklist", method = { RequestMethod.GET })
     @ResponseBody
-    public Result<PortalTaskBo> getTaskInList(@RequestParam(required = false) String taskDescr,
-                                                    @RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime,
+    public Result<PortalTaskBo> getTaskInList(@RequestParam(required = false) String startTime, @RequestParam(required = false) String endTime,
                                                     @RequestParam Integer pageNum, @RequestParam Integer pageSize) throws Exception{
         Result<PortalTaskBo> result = new Result<PortalTaskBo>();
         result.setCode(1);
         result.setMessage("查询成功");
-        PortalTaskBo portalTaskBo = portalTaskService.selectTestIn(taskDescr,startTime,endTime,pageNum,pageSize);
+        PortalTaskBo portalTaskBo = portalTaskService.selectTestIn(startTime,endTime,pageNum,pageSize);
         result.setData(portalTaskBo);
         return result;
     }

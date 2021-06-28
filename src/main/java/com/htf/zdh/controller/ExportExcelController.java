@@ -38,25 +38,21 @@ import java.util.List;
 @Api(tags = { "testIn导出" })
 @RestController("testIn导出")
 @RequestMapping(value = "testIn")
-public class ExportExcel {
+public class ExportExcelController {
     @Autowired
     PortalTaskService portalTaskService;
 
     @ApiOperation(value = "testIn导出", notes = "testIn导出")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "taskDescr", value = "任务名称", required = false, paramType = "query", dataType = "string"),
             @ApiImplicitParam(name = "startTime", value = "开始时间1", required = false, paramType = "query", dataType = "Data"),
-            @ApiImplicitParam(name = "endTime", value = "开始时间2", required = false, paramType = "query", dataType = "Data"),
-            @ApiImplicitParam(name = "pageNum", value = "页码", required = true, paramType = "query", dataType = "int"),
-            @ApiImplicitParam(name = "pageSize", value = "每页显示的数量", required = true, paramType = "query", dataType = "int") })
+            @ApiImplicitParam(name = "endTime", value = "开始时间2", required = false, paramType = "query", dataType = "Data")})
     @RequestMapping(value = "/exportExcel",method = RequestMethod.GET)
     @ResponseBody
     public void export(HttpServletRequest request,HttpServletResponse response) throws Exception {
-        String taskDescr = request.getParameter("taskDescr");
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
         //获取需要导出的数据
-        PortalTaskBo portalTaskBo = portalTaskService.selectTestIn(taskDescr,startTime,endTime,1,20);
+        PortalTaskBo portalTaskBo = portalTaskService.selectTestIn(startTime,endTime,1,2520);
         WriteCellStyle headWriteCellStyle = new WriteCellStyle();
         //设置头居中
         headWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.CENTER);
@@ -66,35 +62,12 @@ public class ExportExcel {
         contentWriteCellStyle.setHorizontalAlignment(HorizontalAlignment.LEFT);
         HorizontalCellStyleStrategy horizontalCellStyleStrategy = new HorizontalCellStyleStrategy(headWriteCellStyle, contentWriteCellStyle);
         response.setContentType("application/vnd.ms-excel;charset=utf-8");
-        //response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
         response.setCharacterEncoding("utf-8");
         // 这里URLEncoder.encode可以防止中文乱码 当然和easyexcel没有关系
         String fileName = URLEncoder.encode("testIn信息表", "UTF-8");
         response.setHeader("Content-disposition", "attachment;filename=" + fileName + ".xls");
         // 这里需要设置不关闭流
         EasyExcel.write(response.getOutputStream(), TaskExcel.class).autoCloseStream(Boolean.FALSE).registerWriteHandler(horizontalCellStyleStrategy).sheet("testIn信息表").doWrite(portalTaskBo.getResultList());
-
-
-
-//        String taskDescr = request.getParameter("taskDescr");
-//        String startTime = request.getParameter("startTime");
-//        String endTime = request.getParameter("endTime");
-//        PortalTaskBo portalTaskBo = portalTaskService.selectTestIn(taskDescr,startTime,endTime,1,100);
-//        ServletOutputStream out = response.getOutputStream();
-//        ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX, true);
-//        String fileName = "测试exportExcel";
-//        WriteSheet sheet = new WriteSheet();
-//        //设置自适应宽度
-//        sheet.setAutoTrim(Boolean.TRUE);
-//        // 第一个 sheet 名称
-//        sheet.setSheetName("第一个sheet");
-//        writer.write(portalTaskBo.getResultList(), sheet);
-//        //通知浏览器以附件的形式下载处理，设置返回头要注意文件名有中文
-//        response.setHeader("Content-disposition", "attachment;filename=" + new String( fileName.getBytes("gb2312"), "ISO8859-1" ) + ".xlsx");
-//        writer.finish();
-//        response.setContentType("multipart/form-data");
-//        response.setCharacterEncoding("utf-8");
-//        out.flush();
     }
 
 }
