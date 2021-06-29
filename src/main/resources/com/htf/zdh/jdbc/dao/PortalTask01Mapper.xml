@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.htf.zdh.jdbc.dao.PortalTask01Mapper">
+  <resultMap id="BaseResultMap" type="com.htf.zdh.jdbc.po.PortalTask01">
+    <id column="taskid" jdbcType="VARCHAR" property="taskid" />
+    <result column="eid" jdbcType="INTEGER" property="eid" />
+    <result column="projectid" jdbcType="INTEGER" property="projectid" />
+    <result column="userid" jdbcType="INTEGER" property="userid" />
+    <result column="suite_id" jdbcType="INTEGER" property="suiteId" />
+    <result column="appid" jdbcType="INTEGER" property="appid" />
+    <result column="pkgid" jdbcType="INTEGER" property="pkgid" />
+    <result column="channel_id" jdbcType="VARCHAR" property="channelId" />
+    <result column="app_name" jdbcType="VARCHAR" property="appName" />
+    <result column="package_url" jdbcType="VARCHAR" property="packageUrl" />
+    <result column="package_name" jdbcType="VARCHAR" property="packageName" />
+    <result column="app_version" jdbcType="VARCHAR" property="appVersion" />
+    <result column="icon_url" jdbcType="VARCHAR" property="iconUrl" />
+    <result column="syspf_id" jdbcType="INTEGER" property="syspfId" />
+    <result column="biz_code" jdbcType="INTEGER" property="bizCode" />
+    <result column="task_status" jdbcType="SMALLINT" property="taskStatus" />
+    <result column="create_person" jdbcType="VARCHAR" property="createPerson" />
+    <result column="status" jdbcType="SMALLINT" property="status" />
+    <result column="createtime" jdbcType="BIGINT" property="createtime" />
+    <result column="updatetime" jdbcType="BIGINT" property="updatetime" />
+    <result column="exec_result" jdbcType="INTEGER" property="execResult" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.htf.zdh.jdbc.po.PortalTask01WithBLOBs">
+    <result column="task_descr" jdbcType="LONGVARCHAR" property="taskDescr" />
+    <result column="content" jdbcType="LONGVARCHAR" property="content" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    taskid, eid, projectid, userid, suite_id, appid, pkgid, channel_id, app_name, package_url, 
+    package_name, app_version, icon_url, syspf_id, biz_code, task_status, create_person, 
+    status, createtime, updatetime, exec_result
+  </sql>
+  <sql id="Blob_Column_List">
+    task_descr, content
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from portal_task_01
+    where taskid = #{taskid,jdbcType=VARCHAR}
+  </select>
+  <select id="selectTasks" resultMap="ResultMapWithBLOBs">
+    select
+    <include refid="Base_Column_List" />,<include refid="Blob_Column_List" />
+    from portal_task_01
+    where 1=1
+    <if test="startTime != null and startTime!=''">
+      AND createtime <![CDATA[ >= ]]> #{startTime,jdbcType=BIGINT}
+    </if>
+    <if test="endTime != null and endTime!=''">
+      AND createtime <![CDATA[ <= ]]> #{endTime,jdbcType=BIGINT}
+    </if>
+    ORDER BY createtime DESC
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from portal_task_01
+    where taskid = #{taskid,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.htf.zdh.jdbc.po.PortalTask01WithBLOBs">
+    insert into portal_task_01 (taskid, eid, projectid, 
+      userid, suite_id, appid, 
+      pkgid, channel_id, app_name, 
+      package_url, package_name, app_version, 
+      icon_url, syspf_id, biz_code, 
+      task_status, create_person, status, 
+      createtime, updatetime, exec_result, 
+      task_descr, content)
+    values (#{taskid,jdbcType=VARCHAR}, #{eid,jdbcType=INTEGER}, #{projectid,jdbcType=INTEGER}, 
+      #{userid,jdbcType=INTEGER}, #{suiteId,jdbcType=INTEGER}, #{appid,jdbcType=INTEGER}, 
+      #{pkgid,jdbcType=INTEGER}, #{channelId,jdbcType=VARCHAR}, #{appName,jdbcType=VARCHAR}, 
+      #{packageUrl,jdbcType=VARCHAR}, #{packageName,jdbcType=VARCHAR}, #{appVersion,jdbcType=VARCHAR}, 
+      #{iconUrl,jdbcType=VARCHAR}, #{syspfId,jdbcType=INTEGER}, #{bizCode,jdbcType=INTEGER}, 
+      #{taskStatus,jdbcType=SMALLINT}, #{createPerson,jdbcType=VARCHAR}, #{status,jdbcType=SMALLINT}, 
+      #{createtime,jdbcType=BIGINT}, #{updatetime,jdbcType=BIGINT}, #{execResult,jdbcType=INTEGER}, 
+      #{taskDescr,jdbcType=LONGVARCHAR}, #{content,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.htf.zdh.jdbc.po.PortalTask01WithBLOBs">
+    insert into portal_task_01
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="taskid != null">
+        taskid,
+      </if>
+      <if test="eid != null">
+        eid,
+      </if>
+      <if test="projectid != null">
+        projectid,
+      </if>
+      <if test="userid != null">
+        userid,
+      </if>
+      <if test="suiteId != null">
+        suite_id,
+      </if>
+      <if test="appid != null">
+        appid,
+      </if>
+      <if test="pkgid != null">
+        pkgid,
+      </if>
+      <if test="channelId != null">
+        channel_id,
+      </if>
+      <if test="appName != null">
+        app_name,
+      </if>
+      <if test="packageUrl != null">
+        package_url,
+      </if>
+      <if test="packageName != null">
+        package_name,
+      </if>
+      <if test="appVersion != null">
+        app_version,
+      </if>
+      <if test="iconUrl != null">
+        icon_url,
+      </if>
+      <if test="syspfId != null">
+        syspf_id,
+      </if>
+      <if test="bizCode != null">
+        biz_code,
+      </if>
+      <if test="taskStatus != null">
+        task_status,
+      </if>
+      <if test="createPerson != null">
+        create_person,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="createtime != null">
+        createtime,
+      </if>
+      <if test="updatetime != null">
+        updatetime,
+      </if>
+      <if test="execResult != null">
+        exec_result,
+      </if>
+      <if test="taskDescr != null">
+        task_descr,
+      </if>
+      <if test="content != null">
+        content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="taskid != null">
+        #{taskid,jdbcType=VARCHAR},
+      </if>
+      <if test="eid != null">
+        #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="projectid != null">
+        #{projectid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="suiteId != null">
+        #{suiteId,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null">
+        #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="pkgid != null">
+        #{pkgid,jdbcType=INTEGER},
+      </if>
+      <if test="channelId != null">
+        #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null">
+        #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="packageUrl != null">
+        #{packageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="packageName != null">
+        #{packageName,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null">
+        #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null">
+        #{iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="syspfId != null">
+        #{syspfId,jdbcType=INTEGER},
+      </if>
+      <if test="bizCode != null">
+        #{bizCode,jdbcType=INTEGER},
+      </if>
+      <if test="taskStatus != null">
+        #{taskStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createPerson != null">
+        #{createPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="createtime != null">
+        #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="execResult != null">
+        #{execResult,jdbcType=INTEGER},
+      </if>
+      <if test="taskDescr != null">
+        #{taskDescr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null">
+        #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.htf.zdh.jdbc.po.PortalTask01WithBLOBs">
+    update portal_task_01
+    <set>
+      <if test="eid != null">
+        eid = #{eid,jdbcType=INTEGER},
+      </if>
+      <if test="projectid != null">
+        projectid = #{projectid,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null">
+        userid = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="suiteId != null">
+        suite_id = #{suiteId,jdbcType=INTEGER},
+      </if>
+      <if test="appid != null">
+        appid = #{appid,jdbcType=INTEGER},
+      </if>
+      <if test="pkgid != null">
+        pkgid = #{pkgid,jdbcType=INTEGER},
+      </if>
+      <if test="channelId != null">
+        channel_id = #{channelId,jdbcType=VARCHAR},
+      </if>
+      <if test="appName != null">
+        app_name = #{appName,jdbcType=VARCHAR},
+      </if>
+      <if test="packageUrl != null">
+        package_url = #{packageUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="packageName != null">
+        package_name = #{packageName,jdbcType=VARCHAR},
+      </if>
+      <if test="appVersion != null">
+        app_version = #{appVersion,jdbcType=VARCHAR},
+      </if>
+      <if test="iconUrl != null">
+        icon_url = #{iconUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="syspfId != null">
+        syspf_id = #{syspfId,jdbcType=INTEGER},
+      </if>
+      <if test="bizCode != null">
+        biz_code = #{bizCode,jdbcType=INTEGER},
+      </if>
+      <if test="taskStatus != null">
+        task_status = #{taskStatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createPerson != null">
+        create_person = #{createPerson,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=SMALLINT},
+      </if>
+      <if test="createtime != null">
+        createtime = #{createtime,jdbcType=BIGINT},
+      </if>
+      <if test="updatetime != null">
+        updatetime = #{updatetime,jdbcType=BIGINT},
+      </if>
+      <if test="execResult != null">
+        exec_result = #{execResult,jdbcType=INTEGER},
+      </if>
+      <if test="taskDescr != null">
+        task_descr = #{taskDescr,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="content != null">
+        content = #{content,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where taskid = #{taskid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.htf.zdh.jdbc.po.PortalTask01WithBLOBs">
+    update portal_task_01
+    set eid = #{eid,jdbcType=INTEGER},
+      projectid = #{projectid,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER},
+      suite_id = #{suiteId,jdbcType=INTEGER},
+      appid = #{appid,jdbcType=INTEGER},
+      pkgid = #{pkgid,jdbcType=INTEGER},
+      channel_id = #{channelId,jdbcType=VARCHAR},
+      app_name = #{appName,jdbcType=VARCHAR},
+      package_url = #{packageUrl,jdbcType=VARCHAR},
+      package_name = #{packageName,jdbcType=VARCHAR},
+      app_version = #{appVersion,jdbcType=VARCHAR},
+      icon_url = #{iconUrl,jdbcType=VARCHAR},
+      syspf_id = #{syspfId,jdbcType=INTEGER},
+      biz_code = #{bizCode,jdbcType=INTEGER},
+      task_status = #{taskStatus,jdbcType=SMALLINT},
+      create_person = #{createPerson,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT},
+      createtime = #{createtime,jdbcType=BIGINT},
+      updatetime = #{updatetime,jdbcType=BIGINT},
+      exec_result = #{execResult,jdbcType=INTEGER},
+      task_descr = #{taskDescr,jdbcType=LONGVARCHAR},
+      content = #{content,jdbcType=LONGVARCHAR}
+    where taskid = #{taskid,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.htf.zdh.jdbc.po.PortalTask01">
+    update portal_task_01
+    set eid = #{eid,jdbcType=INTEGER},
+      projectid = #{projectid,jdbcType=INTEGER},
+      userid = #{userid,jdbcType=INTEGER},
+      suite_id = #{suiteId,jdbcType=INTEGER},
+      appid = #{appid,jdbcType=INTEGER},
+      pkgid = #{pkgid,jdbcType=INTEGER},
+      channel_id = #{channelId,jdbcType=VARCHAR},
+      app_name = #{appName,jdbcType=VARCHAR},
+      package_url = #{packageUrl,jdbcType=VARCHAR},
+      package_name = #{packageName,jdbcType=VARCHAR},
+      app_version = #{appVersion,jdbcType=VARCHAR},
+      icon_url = #{iconUrl,jdbcType=VARCHAR},
+      syspf_id = #{syspfId,jdbcType=INTEGER},
+      biz_code = #{bizCode,jdbcType=INTEGER},
+      task_status = #{taskStatus,jdbcType=SMALLINT},
+      create_person = #{createPerson,jdbcType=VARCHAR},
+      status = #{status,jdbcType=SMALLINT},
+      createtime = #{createtime,jdbcType=BIGINT},
+      updatetime = #{updatetime,jdbcType=BIGINT},
+      exec_result = #{execResult,jdbcType=INTEGER}
+    where taskid = #{taskid,jdbcType=VARCHAR}
+  </update>
+</mapper>
